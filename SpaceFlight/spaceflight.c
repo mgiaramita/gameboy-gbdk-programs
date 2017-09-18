@@ -16,6 +16,9 @@
 #define SCREEN_WIDTH   0x14U
 #define SCREEN_HEIGHT  0x16U
 
+#define TITLE_XPOS     0x2FU
+#define TITLE_YPOS     0xA0U
+
 #define CURSOR_UP      0x00U
 #define CURSOR_RIGHT   0x01U
 #define CURSOR_DOWN    0x02U
@@ -61,7 +64,7 @@ void displayTitle(){
     //Set sprites to tile numbers so they can be displayed
     for(i = 0; i != 10; i++){
         set_sprite_tile(i, i * 2);
-        move_sprite(i, 47 + (8 * i), 160);
+        move_sprite(i, TITLE_XPOS + (8 * i), TITLE_YPOS);
     }
 
     //Set background to all black
@@ -79,10 +82,7 @@ void displayTitle(){
         delay(20);
     }
 
-    //Start game when player presses 'start'
-    //waitpad(J_START);
     delay(2000);
-
 
     HIDE_SPRITES;
     HIDE_BKG;

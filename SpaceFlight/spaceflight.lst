@@ -1,9 +1,9 @@
                               1 ;--------------------------------------------------------
                               2 ; File Created by SDCC : FreeWare ANSI-C Compiler
-                              3 ; Version 2.3.1 Sun Sep 17 14:52:53 2017
+                              3 ; Version 2.3.1 Sun Sep 17 23:10:29 2017
                               4 
                               5 ;--------------------------------------------------------
-                              6 	.module lcc94720
+                              6 	.module lcc134640
                               7 	
                               8 ;--------------------------------------------------------
                               9 ; Public variables in this module
@@ -382,7 +382,7 @@
                             305 ; code
                             306 ;--------------------------------------------------------
                             307 	.area _CODE
-                            308 ;	spaceflight.c 42
+                            308 ;	spaceflight.c 45
                             309 ;	genLabel
                             310 ;	genFunction
                             311 ;	---------------------------------
@@ -391,7 +391,7 @@
    0000                     314 ___main_start:
    0000                     315 _main:
    0000 E8 FD               316 	lda	sp,-3(sp)
-                            317 ;	spaceflight.c 44
+                            317 ;	spaceflight.c 47
                             318 ;	genAssign
    0002 01 40 FF            319 	ld	bc,#0xFF40
                             320 ;	genAssign
@@ -417,19 +417,19 @@
    0015 F6 80               340 	or	a,#0x80
                             341 ;	genAssign (pointer)
    0017 02                  342 	ld	(bc),a
-                            343 ;	spaceflight.c 46
+                            343 ;	spaceflight.c 49
                             344 ;	genCall
                             345 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    0018 CD 27 00            346 	call	_displayTitle
-                            347 ;	spaceflight.c 48
+                            347 ;	spaceflight.c 51
                             348 ;	genCall
                             349 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    001B CD 98 01            350 	call	_setupBackground
-                            351 ;	spaceflight.c 50
+                            351 ;	spaceflight.c 53
                             352 ;	genCall
                             353 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    001E CD D1 01            354 	call	_setupSprites
-                            355 ;	spaceflight.c 52
+                            355 ;	spaceflight.c 55
                             356 ;	genCall
                             357 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    0021 CD 37 02            358 	call	_controlShip
@@ -439,7 +439,7 @@
    0024 E8 03               362 	lda	sp,3(sp)
    0026 C9                  363 	ret
    0027                     364 ___main_end:
-                            365 ;	spaceflight.c 55
+                            365 ;	spaceflight.c 58
                             366 ;	genLabel
                             367 ;	genFunction
                             368 ;	---------------------------------
@@ -448,7 +448,7 @@
    0027                     371 ___displayTitle_start:
    0027                     372 _displayTitle:
    0027 E8 FD               373 	lda	sp,-3(sp)
-                            374 ;	spaceflight.c 56
+                            374 ;	spaceflight.c 59
                             375 ;	genAssign
    0029 01 40 FF            376 	ld	bc,#0xFF40
                             377 ;	genAssign
@@ -474,7 +474,7 @@
    003B F6 04               397 	or	a,#0x04
                             398 ;	genAssign (pointer)
    003D 02                  399 	ld	(bc),a
-                            400 ;	spaceflight.c 59
+                            400 ;	spaceflight.c 62
                             401 ;	genIpush
                             402 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    003E 21 E0 03            403 	ld	hl,#_titletext
@@ -485,7 +485,7 @@
                             408 ;	genCall
    0046 CD 00 00            409 	call	_set_sprite_data
    0049 E8 04               410 	lda	sp,4(sp)
-                            411 ;	spaceflight.c 62
+                            411 ;	spaceflight.c 65
                             412 ;	genAssign
                             413 ;	AOP_HL for _i
    004B 21 22 05            414 	ld	hl,#_i
@@ -500,7 +500,7 @@
    0054 FE 0A               423 	cp	a,#0x0A
    0056 CA AA 00            424 	jp	z,00104$
    0059                     425 00127$:
-                            426 ;	spaceflight.c 63
+                            426 ;	spaceflight.c 66
                             427 ;	genCast
                             428 ;	AOP_HL for _i
    0059 21 22 05            429 	ld	hl,#_i
@@ -540,7 +540,7 @@
    0078 CD 00 00            463 	call	_set_sprite_tile
    007B E8 02               464 	lda	sp,2(sp)
    007D C1                  465 	pop	bc
-                            466 ;	spaceflight.c 64
+                            466 ;	spaceflight.c 67
                             467 ;	genLeftShift
    007E 3E 04               468 	ld	a,#0x03+1
    0080 18 04               469 	jr	00131$
@@ -579,7 +579,7 @@
                             502 ;	genCall
    009E CD 00 00            503 	call	_move_sprite
    00A1 E8 03               504 	lda	sp,3(sp)
-                            505 ;	spaceflight.c 62
+                            505 ;	spaceflight.c 65
                             506 ;	genPlus
                             507 ;	AOP_HL for _i
                             508 ;	genPlusIncr
@@ -589,7 +589,7 @@
    00A7 C3 50 00            512 	jp	00101$
                             513 ;	genLabel
    00AA                     514 00104$:
-                            515 ;	spaceflight.c 68
+                            515 ;	spaceflight.c 71
                             516 ;	genIpush
                             517 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    00AA 21 D0 03            518 	ld	hl,#_blacktile
@@ -600,7 +600,7 @@
                             523 ;	genCall
    00B2 CD 00 00            524 	call	_set_bkg_data
    00B5 E8 04               525 	lda	sp,4(sp)
-                            526 ;	spaceflight.c 69
+                            526 ;	spaceflight.c 72
                             527 ;	genIpush
                             528 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    00B7 21 68 01            529 	ld	hl,#_deepspace
@@ -614,7 +614,7 @@
                             537 ;	genCall
    00C3 CD 00 00            538 	call	_set_bkg_tiles
    00C6 E8 06               539 	lda	sp,6(sp)
-                            540 ;	spaceflight.c 71
+                            540 ;	spaceflight.c 74
                             541 ;	genAssign
    00C8 01 40 FF            542 	ld	bc,#0xFF40
                             543 ;	genAssign
@@ -640,7 +640,7 @@
    00DA F6 01               563 	or	a,#0x01
                             564 ;	genAssign (pointer)
    00DC 02                  565 	ld	(bc),a
-                            566 ;	spaceflight.c 72
+                            566 ;	spaceflight.c 75
                             567 ;	genAssign
    00DD 01 40 FF            568 	ld	bc,#0xFF40
                             569 ;	genAssign
@@ -666,7 +666,7 @@
    00EE F6 02               589 	or	a,#0x02
                             590 ;	genAssign (pointer)
    00F0 02                  591 	ld	(bc),a
-                            592 ;	spaceflight.c 75
+                            592 ;	spaceflight.c 78
                             593 ;	genAssign
                             594 ;	AOP_HL for _i
    00F1 21 22 05            595 	ld	hl,#_i
@@ -681,7 +681,7 @@
    00FA FE 64               604 	cp	a,#0x64
    00FC CA 3F 01            605 	jp	z,00112$
    00FF                     606 00132$:
-                            607 ;	spaceflight.c 76
+                            607 ;	spaceflight.c 79
                             608 ;	genAssign
                             609 ;	AOP_HL for _j
    00FF 21 23 05            610 	ld	hl,#_j
@@ -703,7 +703,7 @@
                             626 ;	genIfx
    0112 B7                  627 	or	a,a
    0113 C2 2F 01            628 	jp	nz,00108$
-                            629 ;	spaceflight.c 77
+                            629 ;	spaceflight.c 80
                             630 ;	genAssign
                             631 ;	(operands are equal 3)
                             632 ;	genIpush
@@ -719,7 +719,7 @@
                             642 ;	genCall
    0120 CD 00 00            643 	call	_scroll_sprite
    0123 E8 03               644 	lda	sp,3(sp)
-                            645 ;	spaceflight.c 76
+                            645 ;	spaceflight.c 79
                             646 ;	genPlus
                             647 ;	AOP_HL for _j
                             648 ;	genPlusIncr
@@ -735,7 +735,7 @@
    012C C3 04 01            658 	jp	00105$
                             659 ;	genLabel
    012F                     660 00108$:
-                            661 ;	spaceflight.c 79
+                            661 ;	spaceflight.c 82
                             662 ;	genIpush
                             663 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    012F 21 14 00            664 	ld	hl,#0x0014
@@ -743,7 +743,7 @@
                             666 ;	genCall
    0133 CD 00 00            667 	call	_delay
    0136 E8 02               668 	lda	sp,2(sp)
-                            669 ;	spaceflight.c 75
+                            669 ;	spaceflight.c 78
                             670 ;	genPlus
                             671 ;	AOP_HL for _i
                             672 ;	genPlusIncr
@@ -753,7 +753,7 @@
    013C C3 F6 00            676 	jp	00109$
                             677 ;	genLabel
    013F                     678 00112$:
-                            679 ;	spaceflight.c 84
+                            679 ;	spaceflight.c 85
                             680 ;	genIpush
                             681 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
    013F 21 D0 07            682 	ld	hl,#0x07D0
