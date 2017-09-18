@@ -1,0 +1,337 @@
+AREA .  .ABS.
+	RADIX HEX
+	BASE 0000
+	SIZE 0000
+	ATTRIB ABS OVR
+	GLOBALS
+		l__HEAP	0000
+		l__BSEG	0000
+		l_.  .ABS.	0000
+		l__GSFINAL	0000
+		l__ISEG	0000
+		s_.  .ABS.	0000
+		s__HEADER	0000
+		l__XSEG	0000
+		.init	0000
+		l__OVERLAY	0000
+		l__LIT	0000
+		l__GSINITTAIL	0001
+		l__DATA	0080
+		l__BSS	0087
+		l__GSINIT	0089
+		l__HEADER	01EB
+		s__CODE	0200
+		l__HOME	04AD
+		l__CODE	0982
+		s__HOME	0B82
+		l__BASE	0F6A
+		s__BASE	102F
+		s__LIT	1F99
+		s__GSINIT	1F99
+		s__GSINITTAIL	2022
+		s__GSFINAL	2023
+		.OAM	C000
+		s__DATA	C0A0
+		s__BSS	C120
+		s__HEAP	C1A7
+		s__BSEG	C1A7
+		s__ISEG	C1A7
+		s__XSEG	C1A7
+		s__OVERLAY	C1A7
+		.STACK	E000
+		.refresh_OAM	FF80
+AREA _CODE
+	RADIX HEX
+	BASE 0200
+	SIZE 0982
+	ATTRIB REL CON
+	GLOBALS
+		_main	0200
+		_setDefaultSprite	0288
+		_walkLoop	02BD
+		__divschar_rrx_s	030F
+		__divschar_rrx_hds	0316
+		__modschar_rrx_s	031D
+		__modschar_rrx_hds	0324
+		__divsint_rrx_s	0329
+		__divsint_rrx_hds	0335
+		__modsint_rrx_s	033D
+		__modsint_rrx_hds	0349
+		__divuchar_rrx_s	034F
+		__divuchar_rrx_hds	0356
+		__moduchar_rrx_s	035D
+		__moduchar_rrx_hds	0364
+		__divuint_rrx_s	0369
+		__divuint_rrx_hds	0375
+		__moduint_rrx_s	037D
+		__moduint_rrx_hds	0389
+		.mod8	038F
+		.div8	038F
+		.mod16	0397
+		.div16	0397
+		.modu8	03D1
+		.divu8	03D1
+		.modu16	03D4
+		.divu16	03D4
+		_putchar	0411
+		_setchar	041A
+		_gotoxy	0423
+		_posx	042E
+		_posy	043F
+		.adv_gcurs	0450
+		.circle	046D
+		.horlin	0510
+		.verlin	0548
+		.circplot	05A4
+		.box	0622
+		.line	06F8
+		.xonly	0819
+		.yonly	0968
+		.plot	0989
+		.wrbyte	09A6
+		.getpix	0A28
+		.wrtchr	0A5D
+		_gotogxy	0AC1
+		_wrtchr	0ACC
+		_getpix	0AE1
+		_color	0AED
+		_circle	0AFC
+		_box	0B16
+		_line	0B3A
+		_plot_point	0B52
+		_plot	0B66
+AREA _HEADER
+	RADIX HEX
+	BASE 0000
+	SIZE 01EB
+	ATTRIB ABS OVR
+	GLOBALS
+		_exit	01D2
+AREA _HOME
+	RADIX HEX
+	BASE 0B82
+	SIZE 04AD
+	ATTRIB REL CON
+	GLOBALS
+		.set_mode	0B82
+		.remove_VBL	0B92
+		.remove_LCD	0B98
+		.remove_TIM	0B9E
+		.remove_SIO	0BA4
+		.remove_JOY	0BAA
+		.add_VBL	0BB0
+		.add_LCD	0BB6
+		.add_TIM	0BBC
+		.add_SIO	0BC2
+		.add_JOY	0BC8
+		.remove_int	0BCE
+		.add_int	0BEE
+		.wait_vbl_done	0C0A
+		_wait_vbl_done	0C0A
+		_display_off	0C21
+		.display_off	0C21
+		.serial_IO	0C42
+		_mode	0C71
+		_get_mode	0C7A
+		_enable_interrupts	0C7F
+		_disable_interrupts	0C81
+		_reset	0C83
+		.reset	0C83
+		_set_interrupts	0C89
+		_remove_VBL	0C94
+		_remove_LCD	0C9F
+		_remove_TIM	0CAA
+		_remove_SIO	0CB5
+		_remove_JOY	0CC0
+		_add_VBL	0CCB
+		_add_LCD	0CD6
+		_add_TIM	0CE1
+		_add_SIO	0CEC
+		_add_JOY	0CF7
+		_clock	0D02
+		__printTStates	0D0B
+		banked_call	0D0C
+		banked_ret	0D25
+		__initrleblock	0D2E
+		_printf	0D55
+		_sprintf	0D72
+AREA _BASE
+	RADIX HEX
+	BASE 102F
+	SIZE 0F6A
+	ATTRIB REL CON
+	GLOBALS
+		.mv_sprite	102F
+		_move_sprite	103E
+		_set_win_data	104B
+		_set_bkg_data	104B
+		_set_sprite_data	1098
+		.padup	10C7
+		_waitpadup	10C7
+		.jpad	10D7
+		.wait_pad	1104
+		_joypad	110B
+		_waitpad	1110
+		.set_sprite_tile	111A
+		_set_sprite_tile	1127
+		.delay	1132
+		_delay	116C
+		.copy_vram	1175
+		_get_data	1184
+		_set_data	1184
+		font_copy_uncompressed	1197
+		font_copy_compressed	11CD
+		font_load	1222
+		font_copy_current	126A
+		font_set	12B2
+		.put_char	12BF
+		.out_char	12D8
+		.del_char	12DF
+		_font_load	133A
+		_font_set	1348
+		_font_init	1357
+		_cls	1379
+		.cls	1379
+		.cr_curs	13AB
+		.adv_curs	13C0
+		.tmode	141C
+		.tmode_out	1445
+		_font_load_ibm_fixed	1455
+		_font_ibm_fixed	145C
+		_font_ibm_fixed_tiles	155E
+		.gmode	1D5E
+		.vbl	1DC0
+		.lcd	1DCB
+		.draw_image	1DD8
+		.switch_data	1DE2
+		_switch_data	1E19
+		_draw_image	1E34
+		.y_table	1E47
+		.init_vram	1F67
+		.init_wtt	1F75
+		.init_btt	1F85
+		.init_tt	1F93
+AREA _LIT
+	RADIX HEX
+	BASE 1F99
+	SIZE 0000
+	ATTRIB REL CON
+AREA _GSINIT
+	RADIX HEX
+	BASE 1F99
+	SIZE 0089
+	ATTRIB REL CON
+	GLOBALS
+		gsinit	1F99
+AREA _GSINITTAIL
+	RADIX HEX
+	BASE 2022
+	SIZE 0001
+	ATTRIB REL CON
+AREA _GSFINAL
+	RADIX HEX
+	BASE 2023
+	SIZE 0000
+	ATTRIB REL CON
+AREA _DATA
+	RADIX HEX
+	BASE C0A0
+	SIZE 0080
+	ATTRIB REL CON
+	GLOBALS
+		_leftwalk	C0A0
+AREA _BSS
+	RADIX HEX
+	BASE C120
+	SIZE 0087
+	ATTRIB REL CON
+	GLOBALS
+		__cpu	C120
+		.mode	C121
+		__io_out	C122
+		__io_in	C123
+		__io_status	C124
+		.vbl_done	C125
+		__current_bank	C126
+		_sys_time	C127
+		.sys_time	C127
+		.int_0x40	C129
+		.int_0x48	C139
+		.int_0x50	C149
+		.int_0x58	C159
+		.int_0x60	C169
+		font_current	C17C
+		font_first_free_tile	C17F
+		font_table	C180
+		.curx	C192
+		.cury	C193
+		.fg_colour	C194
+		.bg_colour	C195
+AREA _HEAP
+	RADIX HEX
+	BASE C1A7
+	SIZE 0000
+	ATTRIB REL CON
+	GLOBALS
+		_malloc_heap_start	C1A7
+AREA _OVERLAY
+	RADIX HEX
+	BASE C1A7
+	SIZE 0000
+	ATTRIB REL CON
+AREA _ISEG
+	RADIX HEX
+	BASE C1A7
+	SIZE 0000
+	ATTRIB REL CON
+AREA _BSEG
+	RADIX HEX
+	BASE C1A7
+	SIZE 0000
+	ATTRIB REL CON
+AREA _XSEG
+	RADIX HEX
+	BASE C1A7
+	SIZE 0000
+	ATTRIB REL CON
+MODULES
+	FILE /opt/gbdk/lib/small/asxxxx/gb/crt0.o
+		NAME Runtime
+	FILE spritedemo.o
+		NAME lcc159920
+LIBRARIES
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gbz80/gbz80.lib
+		MODULE crt0_rle.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE mv_spr.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_data.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE pad.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE set_spr.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE delay.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gbz80/gbz80.lib
+		MODULE printf.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE cpy_data.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gbz80/gbz80.lib
+		MODULE div.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE font.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE ibmfixed.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE drawing.o
+	LIBRARY /opt/gbdk/lib/small/asxxxx/gb/gb.lib
+		MODULE init_tt.o
+USERBASEDEF
+	_CODE=0x0200
+	_DATA=0xC0A0
+	_CODE_1=0x4000
+USERGLOBALDEF
+	.OAM=0xC000
+	.STACK=0xE000
+	.refresh_OAM=0xFF80
+	.init=0x0000

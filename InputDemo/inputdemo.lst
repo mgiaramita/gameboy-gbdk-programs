@@ -1,0 +1,713 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Thu Sep 14 23:18:42 2017
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc148080
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _inputCheck
+                             13 	.globl _inputDisplayLoop
+                             14 ;--------------------------------------------------------
+                             15 ; special function registers
+                             16 ;--------------------------------------------------------
+                             17 ;--------------------------------------------------------
+                             18 ; special function bits 
+                             19 ;--------------------------------------------------------
+                             20 ;--------------------------------------------------------
+                             21 ; internal ram data
+                             22 ;--------------------------------------------------------
+                             23 	.area _DATA
+                             24 ;--------------------------------------------------------
+                             25 ; overlayable items in internal ram 
+                             26 ;--------------------------------------------------------
+                             27 	.area _OVERLAY
+                             28 ;--------------------------------------------------------
+                             29 ; indirectly addressable internal ram data
+                             30 ;--------------------------------------------------------
+                             31 	.area _ISEG
+                             32 ;--------------------------------------------------------
+                             33 ; bit data
+                             34 ;--------------------------------------------------------
+                             35 	.area _BSEG
+                             36 ;--------------------------------------------------------
+                             37 ; external ram data
+                             38 ;--------------------------------------------------------
+                             39 	.area _XSEG
+                             40 ;--------------------------------------------------------
+                             41 ; global & static initialisations
+                             42 ;--------------------------------------------------------
+                             43 	.area _GSINIT
+                             44 	.area _GSFINAL
+                             45 	.area _GSINIT
+                             46 ;--------------------------------------------------------
+                             47 ; Home
+                             48 ;--------------------------------------------------------
+                             49 	.area _HOME
+                             50 	.area _CODE
+                             51 ;--------------------------------------------------------
+                             52 ; code
+                             53 ;--------------------------------------------------------
+                             54 	.area _CODE
+                             55 ;	inputdemo.c 11
+                             56 ;	genLabel
+                             57 ;	genFunction
+                             58 ;	---------------------------------
+                             59 ; Function main
+                             60 ; ---------------------------------
+   0000                      61 ___main_start:
+   0000                      62 _main:
+                             63 	
+                             64 ;	inputdemo.c 13
+                             65 ;	genIpush
+                             66 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0000 21 10 00             67 	ld	hl,#__str_0
+   0003 E5                   68 	push	hl
+                             69 ;	genCall
+   0004 CD 00 00             70 	call	_printf
+   0007 E8 02                71 	lda	sp,2(sp)
+                             72 ;	inputdemo.c 15
+                             73 ;	genCall
+                             74 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0009 CD 25 00             75 	call	_inputCheck
+                             76 ;	inputdemo.c 17
+                             77 ;	genCall
+                             78 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   000C CD B9 01             79 	call	_inputDisplayLoop
+                             80 ;	genLabel
+   000F                      81 00101$:
+                             82 ;	genEndFunction
+                             83 	
+   000F C9                   84 	ret
+   0010                      85 ___main_end:
+   0010                      86 __str_0:
+   0010 47 61 6D 65 42 6F    87 	.ascii "GameBoy Input Demo"
+        79 20 49 6E 70 75
+        74 20 44 65 6D 6F
+   0022 0A                   88 	.db 0x0A
+   0023 0A                   89 	.db 0x0A
+   0024 00                   90 	.db 0x00
+                             91 ;	inputdemo.c 20
+                             92 ;	genLabel
+                             93 ;	genFunction
+                             94 ;	---------------------------------
+                             95 ; Function inputCheck
+                             96 ; ---------------------------------
+   0025                      97 ___inputCheck_start:
+   0025                      98 _inputCheck:
+                             99 	
+                            100 ;	inputdemo.c 21
+                            101 ;	genIpush
+                            102 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0025 21 07 01            103 	ld	hl,#__str_1
+   0028 E5                  104 	push	hl
+                            105 ;	genCall
+   0029 CD 00 00            106 	call	_printf
+   002C E8 02               107 	lda	sp,2(sp)
+                            108 ;	inputdemo.c 22
+                            109 ;	genIpush
+                            110 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   002E 3E 04               111 	ld	a,#0x04
+   0030 F5                  112 	push	af
+   0031 33                  113 	inc	sp
+                            114 ;	genCall
+   0032 CD 00 00            115 	call	_waitpad
+   0035 E8 01               116 	lda	sp,1(sp)
+                            117 ;	inputdemo.c 23
+                            118 ;	genIpush
+                            119 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0037 21 10 01            120 	ld	hl,#__str_2
+   003A E5                  121 	push	hl
+                            122 ;	genCall
+   003B CD 00 00            123 	call	_printf
+   003E E8 02               124 	lda	sp,2(sp)
+                            125 ;	inputdemo.c 25
+                            126 ;	genIpush
+                            127 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0040 21 1D 01            128 	ld	hl,#__str_3
+   0043 E5                  129 	push	hl
+                            130 ;	genCall
+   0044 CD 00 00            131 	call	_printf
+   0047 E8 02               132 	lda	sp,2(sp)
+                            133 ;	inputdemo.c 26
+                            134 ;	genIpush
+                            135 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0049 3E 08               136 	ld	a,#0x08
+   004B F5                  137 	push	af
+   004C 33                  138 	inc	sp
+                            139 ;	genCall
+   004D CD 00 00            140 	call	_waitpad
+   0050 E8 01               141 	lda	sp,1(sp)
+                            142 ;	inputdemo.c 27
+                            143 ;	genIpush
+                            144 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0052 21 28 01            145 	ld	hl,#__str_4
+   0055 E5                  146 	push	hl
+                            147 ;	genCall
+   0056 CD 00 00            148 	call	_printf
+   0059 E8 02               149 	lda	sp,2(sp)
+                            150 ;	inputdemo.c 29
+                            151 ;	genIpush
+                            152 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   005B 21 33 01            153 	ld	hl,#__str_5
+   005E E5                  154 	push	hl
+                            155 ;	genCall
+   005F CD 00 00            156 	call	_printf
+   0062 E8 02               157 	lda	sp,2(sp)
+                            158 ;	inputdemo.c 30
+                            159 ;	genIpush
+                            160 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0064 3E 02               161 	ld	a,#0x02
+   0066 F5                  162 	push	af
+   0067 33                  163 	inc	sp
+                            164 ;	genCall
+   0068 CD 00 00            165 	call	_waitpad
+   006B E8 01               166 	lda	sp,1(sp)
+                            167 ;	inputdemo.c 31
+                            168 ;	genIpush
+                            169 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   006D 21 3E 01            170 	ld	hl,#__str_6
+   0070 E5                  171 	push	hl
+                            172 ;	genCall
+   0071 CD 00 00            173 	call	_printf
+   0074 E8 02               174 	lda	sp,2(sp)
+                            175 ;	inputdemo.c 33
+                            176 ;	genIpush
+                            177 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0076 21 49 01            178 	ld	hl,#__str_7
+   0079 E5                  179 	push	hl
+                            180 ;	genCall
+   007A CD 00 00            181 	call	_printf
+   007D E8 02               182 	lda	sp,2(sp)
+                            183 ;	inputdemo.c 34
+                            184 ;	genIpush
+                            185 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   007F 3E 01               186 	ld	a,#0x01
+   0081 F5                  187 	push	af
+   0082 33                  188 	inc	sp
+                            189 ;	genCall
+   0083 CD 00 00            190 	call	_waitpad
+   0086 E8 01               191 	lda	sp,1(sp)
+                            192 ;	inputdemo.c 35
+                            193 ;	genIpush
+                            194 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0088 21 55 01            195 	ld	hl,#__str_8
+   008B E5                  196 	push	hl
+                            197 ;	genCall
+   008C CD 00 00            198 	call	_printf
+   008F E8 02               199 	lda	sp,2(sp)
+                            200 ;	inputdemo.c 37
+                            201 ;	genIpush
+                            202 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0091 21 5F 01            203 	ld	hl,#__str_9
+   0094 E5                  204 	push	hl
+                            205 ;	genCall
+   0095 CD 00 00            206 	call	_printf
+   0098 E8 02               207 	lda	sp,2(sp)
+                            208 ;	inputdemo.c 38
+                            209 ;	genIpush
+                            210 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   009A 3E 10               211 	ld	a,#0x10
+   009C F5                  212 	push	af
+   009D 33                  213 	inc	sp
+                            214 ;	genCall
+   009E CD 00 00            215 	call	_waitpad
+   00A1 E8 01               216 	lda	sp,1(sp)
+                            217 ;	inputdemo.c 39
+                            218 ;	genIpush
+                            219 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00A3 21 67 01            220 	ld	hl,#__str_10
+   00A6 E5                  221 	push	hl
+                            222 ;	genCall
+   00A7 CD 00 00            223 	call	_printf
+   00AA E8 02               224 	lda	sp,2(sp)
+                            225 ;	inputdemo.c 41
+                            226 ;	genIpush
+                            227 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00AC 21 75 01            228 	ld	hl,#__str_11
+   00AF E5                  229 	push	hl
+                            230 ;	genCall
+   00B0 CD 00 00            231 	call	_printf
+   00B3 E8 02               232 	lda	sp,2(sp)
+                            233 ;	inputdemo.c 42
+                            234 ;	genIpush
+                            235 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00B5 3E 20               236 	ld	a,#0x20
+   00B7 F5                  237 	push	af
+   00B8 33                  238 	inc	sp
+                            239 ;	genCall
+   00B9 CD 00 00            240 	call	_waitpad
+   00BC E8 01               241 	lda	sp,1(sp)
+                            242 ;	inputdemo.c 43
+                            243 ;	genIpush
+                            244 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00BE 21 7D 01            245 	ld	hl,#__str_12
+   00C1 E5                  246 	push	hl
+                            247 ;	genCall
+   00C2 CD 00 00            248 	call	_printf
+   00C5 E8 02               249 	lda	sp,2(sp)
+                            250 ;	inputdemo.c 45
+                            251 ;	genIpush
+                            252 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00C7 21 8B 01            253 	ld	hl,#__str_13
+   00CA E5                  254 	push	hl
+                            255 ;	genCall
+   00CB CD 00 00            256 	call	_printf
+   00CE E8 02               257 	lda	sp,2(sp)
+                            258 ;	inputdemo.c 46
+                            259 ;	genIpush
+                            260 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00D0 3E 80               261 	ld	a,#0x80
+   00D2 F5                  262 	push	af
+   00D3 33                  263 	inc	sp
+                            264 ;	genCall
+   00D4 CD 00 00            265 	call	_waitpad
+   00D7 E8 01               266 	lda	sp,1(sp)
+                            267 ;	inputdemo.c 47
+                            268 ;	genIpush
+                            269 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00D9 21 97 01            270 	ld	hl,#__str_14
+   00DC E5                  271 	push	hl
+                            272 ;	genCall
+   00DD CD 00 00            273 	call	_printf
+   00E0 E8 02               274 	lda	sp,2(sp)
+                            275 ;	inputdemo.c 49
+                            276 ;	genIpush
+                            277 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00E2 21 A1 01            278 	ld	hl,#__str_15
+   00E5 E5                  279 	push	hl
+                            280 ;	genCall
+   00E6 CD 00 00            281 	call	_printf
+   00E9 E8 02               282 	lda	sp,2(sp)
+                            283 ;	inputdemo.c 50
+                            284 ;	genIpush
+                            285 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00EB 3E 40               286 	ld	a,#0x40
+   00ED F5                  287 	push	af
+   00EE 33                  288 	inc	sp
+                            289 ;	genCall
+   00EF CD 00 00            290 	call	_waitpad
+   00F2 E8 01               291 	lda	sp,1(sp)
+                            292 ;	inputdemo.c 51
+                            293 ;	genIpush
+                            294 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00F4 21 AE 01            295 	ld	hl,#__str_16
+   00F7 E5                  296 	push	hl
+                            297 ;	genCall
+   00F8 CD 00 00            298 	call	_printf
+   00FB E8 02               299 	lda	sp,2(sp)
+                            300 ;	inputdemo.c 53
+                            301 ;	genIpush
+                            302 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00FD 21 B7 01            303 	ld	hl,#__str_17
+   0100 E5                  304 	push	hl
+                            305 ;	genCall
+   0101 CD 00 00            306 	call	_printf
+   0104 E8 02               307 	lda	sp,2(sp)
+                            308 ;	genLabel
+   0106                     309 00101$:
+                            310 ;	genEndFunction
+                            311 	
+   0106 C9                  312 	ret
+   0107                     313 ___inputCheck_end:
+   0107                     314 __str_1:
+   0107 50 72 65 73 73 20   315 	.ascii "Press Up"
+        55 70
+   010F 00                  316 	.db 0x00
+   0110                     317 __str_2:
+   0110 20 20 20 20 20 20   318 	.ascii "       -- OK"
+        20 2D 2D 20 4F 4B
+   011C 00                  319 	.db 0x00
+   011D                     320 __str_3:
+   011D 50 72 65 73 73 20   321 	.ascii "Press Down"
+        44 6F 77 6E
+   0127 00                  322 	.db 0x00
+   0128                     323 __str_4:
+   0128 20 20 20 20 20 2D   324 	.ascii "     -- OK"
+        2D 20 4F 4B
+   0132 00                  325 	.db 0x00
+   0133                     326 __str_5:
+   0133 50 72 65 73 73 20   327 	.ascii "Press Left"
+        4C 65 66 74
+   013D 00                  328 	.db 0x00
+   013E                     329 __str_6:
+   013E 20 20 20 20 20 2D   330 	.ascii "     -- OK"
+        2D 20 4F 4B
+   0148 00                  331 	.db 0x00
+   0149                     332 __str_7:
+   0149 50 72 65 73 73 20   333 	.ascii "Press Right"
+        52 69 67 68 74
+   0154 00                  334 	.db 0x00
+   0155                     335 __str_8:
+   0155 20 20 20 20 2D 2D   336 	.ascii "    -- OK"
+        20 4F 4B
+   015E 00                  337 	.db 0x00
+   015F                     338 __str_9:
+   015F 50 72 65 73 73 20   339 	.ascii "Press A"
+        41
+   0166 00                  340 	.db 0x00
+   0167                     341 __str_10:
+   0167 20 20 20 20 20 20   342 	.ascii "        -- OK"
+        20 20 2D 2D 20 4F
+        4B
+   0174 00                  343 	.db 0x00
+   0175                     344 __str_11:
+   0175 50 72 65 73 73 20   345 	.ascii "Press B"
+        42
+   017C 00                  346 	.db 0x00
+   017D                     347 __str_12:
+   017D 20 20 20 20 20 20   348 	.ascii "        -- OK"
+        20 20 2D 2D 20 4F
+        4B
+   018A 00                  349 	.db 0x00
+   018B                     350 __str_13:
+   018B 50 72 65 73 73 20   351 	.ascii "Press Start"
+        53 74 61 72 74
+   0196 00                  352 	.db 0x00
+   0197                     353 __str_14:
+   0197 20 20 20 20 2D 2D   354 	.ascii "    -- OK"
+        20 4F 4B
+   01A0 00                  355 	.db 0x00
+   01A1                     356 __str_15:
+   01A1 50 72 65 73 73 20   357 	.ascii "Press Select"
+        53 65 6C 65 63 74
+   01AD 00                  358 	.db 0x00
+   01AE                     359 __str_16:
+   01AE 20 20 20 2D 2D 20   360 	.ascii "   -- OK"
+        4F 4B
+   01B6 00                  361 	.db 0x00
+   01B7                     362 __str_17:
+   01B7 0A                  363 	.db 0x0A
+   01B8 00                  364 	.db 0x00
+                            365 ;	inputdemo.c 56
+                            366 ;	genLabel
+                            367 ;	genFunction
+                            368 ;	---------------------------------
+                            369 ; Function inputDisplayLoop
+                            370 ; ---------------------------------
+   01B9                     371 ___inputDisplayLoop_start:
+   01B9                     372 _inputDisplayLoop:
+                            373 	
+                            374 ;	inputdemo.c 59
+                            375 ;	genLabel
+   01B9                     376 00125$:
+                            377 ;	inputdemo.c 60
+                            378 ;	genCall
+                            379 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01B9 CD 00 00            380 	call	_joypad
+   01BC 4B                  381 	ld	c,e
+                            382 ;	genAssign
+                            383 ;	(registers are the same)
+                            384 ;	inputdemo.c 62
+                            385 ;	genCmpEq
+                            386 ; genCmpEq: left 1, right 1, result 0
+   01BD 79                  387 	ld	a,c
+   01BE FE 04               388 	cp	a,#0x04
+   01C0 C2 D7 01            389 	jp	nz,00122$
+   01C3 18 03               390 	jr	00139$
+   01C5                     391 00138$:
+   01C5 C3 D7 01            392 	jp	00122$
+   01C8                     393 00139$:
+                            394 ;	inputdemo.c 63
+                            395 ;	genIpush
+                            396 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   01C8 C5                  397 	push	bc
+   01C9 21 94 02            398 	ld	hl,#__str_18
+   01CC E5                  399 	push	hl
+                            400 ;	genCall
+   01CD CD 00 00            401 	call	_printf
+   01D0 E8 02               402 	lda	sp,2(sp)
+   01D2 E1                  403 	pop	hl
+   01D3 4D                  404 	ld	c,l
+                            405 ;	genGoto
+   01D4 C3 87 02            406 	jp	00123$
+                            407 ;	genLabel
+   01D7                     408 00122$:
+                            409 ;	inputdemo.c 65
+                            410 ;	genCmpEq
+                            411 ; genCmpEq: left 1, right 1, result 0
+   01D7 79                  412 	ld	a,c
+   01D8 FE 08               413 	cp	a,#0x08
+   01DA C2 F1 01            414 	jp	nz,00119$
+   01DD 18 03               415 	jr	00141$
+   01DF                     416 00140$:
+   01DF C3 F1 01            417 	jp	00119$
+   01E2                     418 00141$:
+                            419 ;	inputdemo.c 66
+                            420 ;	genIpush
+                            421 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   01E2 C5                  422 	push	bc
+   01E3 21 9F 02            423 	ld	hl,#__str_19
+   01E6 E5                  424 	push	hl
+                            425 ;	genCall
+   01E7 CD 00 00            426 	call	_printf
+   01EA E8 02               427 	lda	sp,2(sp)
+   01EC E1                  428 	pop	hl
+   01ED 4D                  429 	ld	c,l
+                            430 ;	genGoto
+   01EE C3 87 02            431 	jp	00123$
+                            432 ;	genLabel
+   01F1                     433 00119$:
+                            434 ;	inputdemo.c 68
+                            435 ;	genCmpEq
+                            436 ; genCmpEq: left 1, right 1, result 0
+   01F1 79                  437 	ld	a,c
+   01F2 FE 02               438 	cp	a,#0x02
+   01F4 C2 0B 02            439 	jp	nz,00116$
+   01F7 18 03               440 	jr	00143$
+   01F9                     441 00142$:
+   01F9 C3 0B 02            442 	jp	00116$
+   01FC                     443 00143$:
+                            444 ;	inputdemo.c 69
+                            445 ;	genIpush
+                            446 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   01FC C5                  447 	push	bc
+   01FD 21 AC 02            448 	ld	hl,#__str_20
+   0200 E5                  449 	push	hl
+                            450 ;	genCall
+   0201 CD 00 00            451 	call	_printf
+   0204 E8 02               452 	lda	sp,2(sp)
+   0206 E1                  453 	pop	hl
+   0207 4D                  454 	ld	c,l
+                            455 ;	genGoto
+   0208 C3 87 02            456 	jp	00123$
+                            457 ;	genLabel
+   020B                     458 00116$:
+                            459 ;	inputdemo.c 71
+                            460 ;	genCmpEq
+                            461 ; genCmpEq: left 1, right 1, result 0
+   020B 79                  462 	ld	a,c
+   020C FE 01               463 	cp	a,#0x01
+   020E C2 25 02            464 	jp	nz,00113$
+   0211 18 03               465 	jr	00145$
+   0213                     466 00144$:
+   0213 C3 25 02            467 	jp	00113$
+   0216                     468 00145$:
+                            469 ;	inputdemo.c 72
+                            470 ;	genIpush
+                            471 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0216 C5                  472 	push	bc
+   0217 21 B9 02            473 	ld	hl,#__str_21
+   021A E5                  474 	push	hl
+                            475 ;	genCall
+   021B CD 00 00            476 	call	_printf
+   021E E8 02               477 	lda	sp,2(sp)
+   0220 E1                  478 	pop	hl
+   0221 4D                  479 	ld	c,l
+                            480 ;	genGoto
+   0222 C3 87 02            481 	jp	00123$
+                            482 ;	genLabel
+   0225                     483 00113$:
+                            484 ;	inputdemo.c 74
+                            485 ;	genCmpEq
+                            486 ; genCmpEq: left 1, right 1, result 0
+   0225 79                  487 	ld	a,c
+   0226 FE 10               488 	cp	a,#0x10
+   0228 C2 3F 02            489 	jp	nz,00110$
+   022B 18 03               490 	jr	00147$
+   022D                     491 00146$:
+   022D C3 3F 02            492 	jp	00110$
+   0230                     493 00147$:
+                            494 ;	inputdemo.c 75
+                            495 ;	genIpush
+                            496 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0230 C5                  497 	push	bc
+   0231 21 C7 02            498 	ld	hl,#__str_22
+   0234 E5                  499 	push	hl
+                            500 ;	genCall
+   0235 CD 00 00            501 	call	_printf
+   0238 E8 02               502 	lda	sp,2(sp)
+   023A E1                  503 	pop	hl
+   023B 4D                  504 	ld	c,l
+                            505 ;	genGoto
+   023C C3 87 02            506 	jp	00123$
+                            507 ;	genLabel
+   023F                     508 00110$:
+                            509 ;	inputdemo.c 77
+                            510 ;	genCmpEq
+                            511 ; genCmpEq: left 1, right 1, result 0
+   023F 79                  512 	ld	a,c
+   0240 FE 20               513 	cp	a,#0x20
+   0242 C2 59 02            514 	jp	nz,00107$
+   0245 18 03               515 	jr	00149$
+   0247                     516 00148$:
+   0247 C3 59 02            517 	jp	00107$
+   024A                     518 00149$:
+                            519 ;	inputdemo.c 78
+                            520 ;	genIpush
+                            521 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   024A C5                  522 	push	bc
+   024B 21 D1 02            523 	ld	hl,#__str_23
+   024E E5                  524 	push	hl
+                            525 ;	genCall
+   024F CD 00 00            526 	call	_printf
+   0252 E8 02               527 	lda	sp,2(sp)
+   0254 E1                  528 	pop	hl
+   0255 4D                  529 	ld	c,l
+                            530 ;	genGoto
+   0256 C3 87 02            531 	jp	00123$
+                            532 ;	genLabel
+   0259                     533 00107$:
+                            534 ;	inputdemo.c 80
+                            535 ;	genCmpEq
+                            536 ; genCmpEq: left 1, right 1, result 0
+   0259 79                  537 	ld	a,c
+   025A FE 80               538 	cp	a,#0x80
+   025C C2 73 02            539 	jp	nz,00104$
+   025F 18 03               540 	jr	00151$
+   0261                     541 00150$:
+   0261 C3 73 02            542 	jp	00104$
+   0264                     543 00151$:
+                            544 ;	inputdemo.c 81
+                            545 ;	genIpush
+                            546 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   0264 C5                  547 	push	bc
+   0265 21 DB 02            548 	ld	hl,#__str_24
+   0268 E5                  549 	push	hl
+                            550 ;	genCall
+   0269 CD 00 00            551 	call	_printf
+   026C E8 02               552 	lda	sp,2(sp)
+   026E E1                  553 	pop	hl
+   026F 4D                  554 	ld	c,l
+                            555 ;	genGoto
+   0270 C3 87 02            556 	jp	00123$
+                            557 ;	genLabel
+   0273                     558 00104$:
+                            559 ;	inputdemo.c 83
+                            560 ;	genCmpEq
+                            561 ; genCmpEq: left 1, right 1, result 0
+   0273 79                  562 	ld	a,c
+   0274 FE 40               563 	cp	a,#0x40
+   0276 C2 87 02            564 	jp	nz,00123$
+   0279 18 03               565 	jr	00153$
+   027B                     566 00152$:
+   027B C3 87 02            567 	jp	00123$
+   027E                     568 00153$:
+                            569 ;	inputdemo.c 84
+                            570 ;	genIpush
+                            571 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   027E 21 E9 02            572 	ld	hl,#__str_25
+   0281 E5                  573 	push	hl
+                            574 ;	genCall
+   0282 CD 00 00            575 	call	_printf
+   0285 E8 02               576 	lda	sp,2(sp)
+                            577 ;	genLabel
+   0287                     578 00123$:
+                            579 ;	inputdemo.c 87
+                            580 ;	genIpush
+                            581 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0287 21 14 00            582 	ld	hl,#0x0014
+   028A E5                  583 	push	hl
+                            584 ;	genCall
+   028B CD 00 00            585 	call	_delay
+   028E E8 02               586 	lda	sp,2(sp)
+                            587 ;	genGoto
+   0290 C3 B9 01            588 	jp	00125$
+                            589 ;	genLabel
+   0293                     590 00127$:
+                            591 ;	genEndFunction
+                            592 	
+   0293 C9                  593 	ret
+   0294                     594 ___inputDisplayLoop_end:
+   0294                     595 __str_18:
+   0294 49 6E 70 75 74 3A   596 	.ascii "Input: Up"
+        20 55 70
+   029D 0A                  597 	.db 0x0A
+   029E 00                  598 	.db 0x00
+   029F                     599 __str_19:
+   029F 49 6E 70 75 74 3A   600 	.ascii "Input: Down"
+        20 44 6F 77 6E
+   02AA 0A                  601 	.db 0x0A
+   02AB 00                  602 	.db 0x00
+   02AC                     603 __str_20:
+   02AC 49 6E 70 75 74 3A   604 	.ascii "Input: Left"
+        20 4C 65 66 74
+   02B7 0A                  605 	.db 0x0A
+   02B8 00                  606 	.db 0x00
+   02B9                     607 __str_21:
+   02B9 49 6E 70 75 74 3A   608 	.ascii "Input: Right"
+        20 52 69 67 68 74
+   02C5 0A                  609 	.db 0x0A
+   02C6 00                  610 	.db 0x00
+   02C7                     611 __str_22:
+   02C7 49 6E 70 75 74 3A   612 	.ascii "Input: A"
+        20 41
+   02CF 0A                  613 	.db 0x0A
+   02D0 00                  614 	.db 0x00
+   02D1                     615 __str_23:
+   02D1 49 6E 70 75 74 3A   616 	.ascii "Input: B"
+        20 42
+   02D9 0A                  617 	.db 0x0A
+   02DA 00                  618 	.db 0x00
+   02DB                     619 __str_24:
+   02DB 49 6E 70 75 74 3A   620 	.ascii "Input: Start"
+        20 53 74 61 72 74
+   02E7 0A                  621 	.db 0x0A
+   02E8 00                  622 	.db 0x00
+   02E9                     623 __str_25:
+   02E9 49 6E 70 75 74 3A   624 	.ascii "Input: Select"
+        20 53 65 6C 65 63
+        74
+   02F6 0A                  625 	.db 0x0A
+   02F7 00                  626 	.db 0x00
+                            627 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 ___inputCheck_end                  0107 R
+  0 ___inputCheck_start                0025 R
+  0 ___inputDisplayLoop_end            0294 R
+  0 ___inputDisplayLoop_start          01B9 R
+  0 ___main_end                        0010 R
+  0 ___main_start                      0000 R
+  0 __str_0                            0010 R
+  0 __str_1                            0107 R
+  0 __str_10                           0167 R
+  0 __str_11                           0175 R
+  0 __str_12                           017D R
+  0 __str_13                           018B R
+  0 __str_14                           0197 R
+  0 __str_15                           01A1 R
+  0 __str_16                           01AE R
+  0 __str_17                           01B7 R
+  0 __str_18                           0294 R
+  0 __str_19                           029F R
+  0 __str_2                            0110 R
+  0 __str_20                           02AC R
+  0 __str_21                           02B9 R
+  0 __str_22                           02C7 R
+  0 __str_23                           02D1 R
+  0 __str_24                           02DB R
+  0 __str_25                           02E9 R
+  0 __str_3                            011D R
+  0 __str_4                            0128 R
+  0 __str_5                            0133 R
+  0 __str_6                            013E R
+  0 __str_7                            0149 R
+  0 __str_8                            0155 R
+  0 __str_9                            015F R
+    _delay                             **** GX
+  0 _inputCheck                        0025 GR
+  0 _inputDisplayLoop                  01B9 GR
+    _joypad                            **** GX
+  0 _main                              0000 GR
+    _printf                            **** GX
+    _waitpad                           **** GX
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  2F8   flags 0
+   1 _DATA                              size    0   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size    0   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0

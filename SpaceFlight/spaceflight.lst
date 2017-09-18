@@ -1,0 +1,1403 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : FreeWare ANSI-C Compiler
+                              3 ; Version 2.3.1 Sun Sep 17 14:52:53 2017
+                              4 
+                              5 ;--------------------------------------------------------
+                              6 	.module lcc94720
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _main
+                             12 	.globl _j
+                             13 	.globl _i
+                             14 	.globl _y
+                             15 	.globl _x
+                             16 	.globl _titletext
+                             17 	.globl _blacktile
+                             18 	.globl _spacetiles
+                             19 	.globl _spaceship
+                             20 	.globl _deepspace
+                             21 	.globl _spacemap
+                             22 	.globl _displayTitle
+                             23 	.globl _setupBackground
+                             24 	.globl _setupSprites
+                             25 	.globl _controlShip
+                             26 	.globl _moveShip
+                             27 ;--------------------------------------------------------
+                             28 ; special function registers
+                             29 ;--------------------------------------------------------
+                             30 ;--------------------------------------------------------
+                             31 ; special function bits 
+                             32 ;--------------------------------------------------------
+                             33 ;--------------------------------------------------------
+                             34 ; internal ram data
+                             35 ;--------------------------------------------------------
+                             36 	.area _DATA
+   0000                      37 _spacemap::
+   0000                      38 	.ds 360
+   0168                      39 _deepspace::
+   0168                      40 	.ds 360
+   02D0                      41 _spaceship::
+   02D0                      42 	.ds 128
+   0350                      43 _spacetiles::
+   0350                      44 	.ds 128
+   03D0                      45 _blacktile::
+   03D0                      46 	.ds 16
+   03E0                      47 _titletext::
+   03E0                      48 	.ds 320
+   0520                      49 _x::
+   0520                      50 	.ds 1
+   0521                      51 _y::
+   0521                      52 	.ds 1
+   0522                      53 _i::
+   0522                      54 	.ds 1
+   0523                      55 _j::
+   0523                      56 	.ds 1
+                             57 ;--------------------------------------------------------
+                             58 ; overlayable items in internal ram 
+                             59 ;--------------------------------------------------------
+                             60 	.area _OVERLAY
+                             61 ;--------------------------------------------------------
+                             62 ; indirectly addressable internal ram data
+                             63 ;--------------------------------------------------------
+                             64 	.area _ISEG
+                             65 ;--------------------------------------------------------
+                             66 ; bit data
+                             67 ;--------------------------------------------------------
+                             68 	.area _BSEG
+                             69 ;--------------------------------------------------------
+                             70 ; external ram data
+                             71 ;--------------------------------------------------------
+                             72 	.area _XSEG
+                             73 ;--------------------------------------------------------
+                             74 ; global & static initialisations
+                             75 ;--------------------------------------------------------
+                             76 	.area _GSINIT
+                             77 	.area _GSFINAL
+                             78 	.area _GSINIT
+                             79 ;	spaceflight.c 25
+                             80 ;	spaceflight.c 175
+                             81 ;	genArrayInit
+                             82 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0000 21 00 00             83 	ld	hl,#_spacemap
+   0003 CD 00 00             84 	call	__initrleblock
+   0006 07                   85 	.db	7
+   0007 00 00 02 00 03 00    86 	.db	0x00, 0x00, 0x02, 0x00, 0x03, 0x00, 0x02
+        02
+   000E F5 00                87 	.db	-11,0x00
+   0010 01                   88 	.db	1
+   0011 03                   89 	.db	0x03
+   0012 FB 00                90 	.db	-5,0x00
+   0014 0C                   91 	.db	12
+   0015 03 07 00 00 00 01    92 	.db	0x03, 0x07, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03
+        00 03
+   001D 00 00 00 03          93 	.db	0x00, 0x00, 0x00, 0x03
+   0021 EF 00                94 	.db	-17,0x00
+   0023 0E                   95 	.db	14
+   0024 03 03 03 00 00 00    96 	.db	0x03, 0x03, 0x03, 0x00, 0x00, 0x00, 0x03, 0x00
+        03 00
+   002C 00 01 00 00 02 03    97 	.db	0x00, 0x01, 0x00, 0x00, 0x02, 0x03
+   0032 F7 00                98 	.db	-9,0x00
+   0034 0B                   99 	.db	11
+   0035 04 00 00 02 02 00   100 	.db	0x04, 0x00, 0x00, 0x02, 0x02, 0x00, 0x00, 0x00
+        00 00
+   003D 03 03 00            101 	.db	0x03, 0x03, 0x00
+   0040 FA 03               102 	.db	-6,0x03
+   0042 F6 00               103 	.db	-10,0x00
+   0044 18                  104 	.db	24
+   0045 03 00 03 00 03 02   105 	.db	0x03, 0x00, 0x03, 0x00, 0x03, 0x02, 0x00, 0x00
+        00 00
+   004D 00 01 00 00 02 00   106 	.db	0x00, 0x01, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00
+        00 00
+   0055 00 01 00 00 00 00   107 	.db	0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x03, 0x03
+        03 03
+   005D FA 00               108 	.db	-6,0x00
+   005F 40                  109 	.db	64
+   0060 03 03 00 00 00 00   110 	.db	0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x03, 0x03
+        03 03
+   0068 03 00 02 00 03 00   111 	.db	0x03, 0x00, 0x02, 0x00, 0x03, 0x00, 0x00, 0x02
+        00 02
+   0070 03 00 00 00 03 03   112 	.db	0x03, 0x00, 0x00, 0x00, 0x03, 0x03, 0x00, 0x02
+        00 02
+   0078 00 00 00 03 00 00   113 	.db	0x00, 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00
+        00 00
+   0080 03 00 00 00 03 05   114 	.db	0x03, 0x00, 0x00, 0x00, 0x03, 0x05, 0x02, 0x00
+        02 00
+   0088 00 03 00 03 00 00   115 	.db	0x00, 0x03, 0x00, 0x03, 0x00, 0x00, 0x03, 0x00
+        03 00
+   0090 06 00 00 03 00 00   116 	.db	0x06, 0x00, 0x00, 0x03, 0x00, 0x00, 0x01, 0x00
+        01 00
+   0098 00 03 00 03 00 03   117 	.db	0x00, 0x03, 0x00, 0x03, 0x00, 0x03, 0x00, 0x03
+        00 03
+   00A0 F5 00               118 	.db	-11,0x00
+   00A2 1B                  119 	.db	27
+   00A3 03 03 00 03 00 00   120 	.db	0x03, 0x03, 0x00, 0x03, 0x00, 0x00, 0x03, 0x00
+        03 00
+   00AB 00 00 00 02 00 00   121 	.db	0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x01, 0x00
+        01 00
+   00B3 03 03 00 03 00 02   122 	.db	0x03, 0x03, 0x00, 0x03, 0x00, 0x02, 0x00, 0x00
+        00 00
+   00BB 00 00 01            123 	.db	0x00, 0x00, 0x01
+   00BE F7 00               124 	.db	-9,0x00
+   00C0 05                  125 	.db	5
+   00C1 03 03 03 00 03      126 	.db	0x03, 0x03, 0x03, 0x00, 0x03
+   00C6 F8 00               127 	.db	-8,0x00
+   00C8 0F                  128 	.db	15
+   00C9 03 00 00 02 00 00   129 	.db	0x03, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x03
+        00 03
+   00D1 00 03 03 03 03 00   130 	.db	0x00, 0x03, 0x03, 0x03, 0x03, 0x00, 0x03
+        03
+   00D8 FB 00               131 	.db	-5,0x00
+   00DA 02                  132 	.db	2
+   00DB 03 03               133 	.db	0x03, 0x03
+   00DD F8 00               134 	.db	-8,0x00
+   00DF 19                  135 	.db	25
+   00E0 03 03 03 00 00 02   136 	.db	0x03, 0x03, 0x03, 0x00, 0x00, 0x02, 0x03, 0x00
+        03 00
+   00E8 00 07 01 00 00 03   137 	.db	0x00, 0x07, 0x01, 0x00, 0x00, 0x03, 0x00, 0x00
+        00 00
+   00F0 05 02 03 00 00 00   138 	.db	0x05, 0x02, 0x03, 0x00, 0x00, 0x00, 0x03, 0x03
+        03 03
+   00F8 03                  139 	.db	0x03
+   00F9 F8 00               140 	.db	-8,0x00
+   00FB 04                  141 	.db	4
+   00FC 03 00 00 03         142 	.db	0x03, 0x00, 0x00, 0x03
+   0100 EE 00               143 	.db	-18,0x00
+   0102 01                  144 	.db	1
+   0103 02                  145 	.db	0x02
+   0104 F7 00               146 	.db	-9,0x00
+   0106 08                  147 	.db	8
+   0107 02 00 00 00 00 03   148 	.db	0x02, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x00
+        00 00
+   010F 00                  149 	.db	0
+                            150 ;	spaceflight.c 65
+                            151 ;	spaceflight.c 175
+                            152 ;	genArrayInit
+                            153 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0110 21 68 01            154 	ld	hl,#_deepspace
+   0113 CD 00 00            155 	call	__initrleblock
+   0116 81 08               156 	.db	-127,0x08
+   0118 81 08               157 	.db	-127,0x08
+   011A 96 08               158 	.db	-106,0x08
+   011C 00                  159 	.db	0
+                            160 ;	spaceflight.c 26
+                            161 ;	spaceflight.c 175
+                            162 ;	genArrayInit
+                            163 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   011D 21 D0 02            164 	ld	hl,#_spaceship
+   0120 CD 00 00            165 	call	__initrleblock
+   0123 7F                  166 	.db	127
+   0124 10 00 18 00 18 00   167 	.db	0x10, 0x00, 0x18, 0x00, 0x18, 0x00, 0x24, 0x18
+        24 18
+   012C 42 3C 42 3C 5A 24   168 	.db	0x42, 0x3C, 0x42, 0x3C, 0x5A, 0x24, 0x24, 0x00
+        24 00
+   0134 00 00 70 00 88 70   169 	.db	0x00, 0x00, 0x70, 0x00, 0x88, 0x70, 0x47, 0x38
+        47 38
+   013C 46 38 88 70 70 00   170 	.db	0x46, 0x38, 0x88, 0x70, 0x70, 0x00, 0x00, 0x00
+        00 00
+   0144 24 00 5A 24 42 3C   171 	.db	0x24, 0x00, 0x5A, 0x24, 0x42, 0x3C, 0x42, 0x3C
+        42 3C
+   014C 24 18 18 00 18 00   172 	.db	0x24, 0x18, 0x18, 0x00, 0x18, 0x00, 0x08, 0x00
+        08 00
+   0154 00 00 0E 00 11 0E   173 	.db	0x00, 0x00, 0x0E, 0x00, 0x11, 0x0E, 0x62, 0x1C
+        62 1C
+   015C E2 1C 11 0E 0E 00   174 	.db	0xE2, 0x1C, 0x11, 0x0E, 0x0E, 0x00, 0x00, 0x00
+        00 00
+   0164 80 00 60 00 5E 20   175 	.db	0x80, 0x00, 0x60, 0x00, 0x5E, 0x20, 0x21, 0x1E
+        21 1E
+   016C 21 1E 27 18 24 18   176 	.db	0x21, 0x1E, 0x27, 0x18, 0x24, 0x18, 0x1C, 0x00
+        1C 00
+   0174 01 00 06 00 7A 04   177 	.db	0x01, 0x00, 0x06, 0x00, 0x7A, 0x04, 0x84, 0x78
+        84 78
+   017C 84 78 E4 18 24 18   178 	.db	0x84, 0x78, 0xE4, 0x18, 0x24, 0x18, 0x38, 0x00
+        38 00
+   0184 38 00 24 18 E4 18   179 	.db	0x38, 0x00, 0x24, 0x18, 0xE4, 0x18, 0x84, 0x78
+        84 78
+   018C 84 78 7A 04 06 00   180 	.db	0x84, 0x78, 0x7A, 0x04, 0x06, 0x00, 0x01, 0x00
+        01 00
+   0194 1C 00 24 18 27 18   181 	.db	0x1C, 0x00, 0x24, 0x18, 0x27, 0x18, 0x21, 0x1E
+        21 1E
+   019C 21 1E 5E 20 60 00   182 	.db	0x21, 0x1E, 0x5E, 0x20, 0x60, 0x00, 0x80
+        80
+   01A3 01                  183 	.db	1
+   01A4 00                  184 	.db	0x00
+   01A5 00                  185 	.db	0
+                            186 ;	spaceflight.c 26
+                            187 ;	spaceflight.c 175
+                            188 ;	genArrayInit
+                            189 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01A6 21 50 03            190 	ld	hl,#_spacetiles
+   01A9 CD 00 00            191 	call	__initrleblock
+   01AC 0B                  192 	.db	11
+   01AD FF FF FB FF FF FF   193 	.db	0xFF, 0xFF, 0xFB, 0xFF, 0xFF, 0xFF, 0xBF, 0xFF
+        BF FF
+   01B5 FF FF FE            194 	.db	0xFF, 0xFF, 0xFE
+   01B8 F9 FF               195 	.db	-7,0xFF
+   01BA 01                  196 	.db	1
+   01BB EF                  197 	.db	0xEF
+   01BC FB FF               198 	.db	-5,0xFF
+   01BE 05                  199 	.db	5
+   01BF BF FF FF FF F7      200 	.db	0xBF, 0xFF, 0xFF, 0xFF, 0xF7
+   01C4 FB FF               201 	.db	-5,0xFF
+   01C6 01                  202 	.db	1
+   01C7 BE                  203 	.db	0xBE
+   01C8 F5 FF               204 	.db	-11,0xFF
+   01CA 05                  205 	.db	5
+   01CB DF FF FF FF FD      206 	.db	0xDF, 0xFF, 0xFF, 0xFF, 0xFD
+   01D0 FB FF               207 	.db	-5,0xFF
+   01D2 01                  208 	.db	1
+   01D3 BF                  209 	.db	0xBF
+   01D4 F9 FF               210 	.db	-7,0xFF
+   01D6 0F                  211 	.db	15
+   01D7 DB FF A5 FF 7E E7   212 	.db	0xDB, 0xFF, 0xA5, 0xFF, 0x7E, 0xE7, 0xBD, 0xCB
+        BD CB
+   01DF BD D3 7E E7 A5 FF   213 	.db	0xBD, 0xD3, 0x7E, 0xE7, 0xA5, 0xFF, 0xDB
+        DB
+   01E6 FB FF               214 	.db	-5,0xFF
+   01E8 19                  215 	.db	25
+   01E9 F7 FF EB F7 EB 94   216 	.db	0xF7, 0xFF, 0xEB, 0xF7, 0xEB, 0x94, 0xEB, 0xF7
+        EB F7
+   01F1 F7 FF FF FF E7 FF   217 	.db	0xF7, 0xFF, 0xFF, 0xFF, 0xE7, 0xFF, 0xC3, 0xFF
+        C3 FF
+   01F9 93 FF B9 FF F9 FF   218 	.db	0x93, 0xFF, 0xB9, 0xFF, 0xF9, 0xFF, 0xF3, 0xFF
+        F3 FF
+   0201 E7                  219 	.db	0xE7
+   0202 F8 FF               220 	.db	-8,0xFF
+   0204 0B                  221 	.db	11
+   0205 CF 87 FF FF 03 03   222 	.db	0xCF, 0x87, 0xFF, 0xFF, 0x03, 0x03, 0xFF, 0xFF
+        FF FF
+   020D 87 CF FF            223 	.db	0x87, 0xCF, 0xFF
+   0210 00                  224 	.db	0
+                            225 ;	spaceflight.c 46
+                            226 ;	spaceflight.c 175
+                            227 ;	genArrayInit
+                            228 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0211 21 D0 03            229 	ld	hl,#_blacktile
+   0214 CD 00 00            230 	call	__initrleblock
+   0217 F0 FF               231 	.db	-16,0xFF
+   0219 00                  232 	.db	0
+                            233 ;	spaceflight.c 26
+                            234 ;	spaceflight.c 175
+                            235 ;	genArrayInit
+                            236 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   021A 21 E0 03            237 	ld	hl,#_titletext
+   021D CD 00 00            238 	call	__initrleblock
+   0220 1E                  239 	.db	30
+   0221 FF FF FF 81 FF 81   240 	.db	0xFF, 0xFF, 0xFF, 0x81, 0xFF, 0x81, 0xFF, 0x99
+        FF 99
+   0229 FF 99 FF 9F FF 9F   241 	.db	0xFF, 0x99, 0xFF, 0x9F, 0xFF, 0x9F, 0xFF, 0x81
+        FF 81
+   0231 FF 81 FF F9 FF F9   242 	.db	0xFF, 0x81, 0xFF, 0xF9, 0xFF, 0xF9, 0xFF, 0x99
+        FF 99
+   0239 FF 99 FF 81 FF 81   243 	.db	0xFF, 0x99, 0xFF, 0x81, 0xFF, 0x81
+   023F FB FF               244 	.db	-5,0xFF
+   0241 1B                  245 	.db	27
+   0242 02 FF 02 FF 32 FF   246 	.db	0x02, 0xFF, 0x02, 0xFF, 0x32, 0xFF, 0x32, 0xFF
+        32 FF
+   024A 32 FF 32 FF 02 FF   247 	.db	0x32, 0xFF, 0x32, 0xFF, 0x02, 0xFF, 0x02, 0xFF
+        02 FF
+   0252 3E FF 3E FF 3E FF   248 	.db	0x3E, 0xFF, 0x3E, 0xFF, 0x3E, 0xFF, 0x3E, 0xFF
+        3E FF
+   025A 3E FF 3E            249 	.db	0x3E, 0xFF, 0x3E
+   025D FB FF               250 	.db	-5,0xFF
+   025F 1B                  251 	.db	27
+   0260 04 FF 04 FF 64 FF   252 	.db	0x04, 0xFF, 0x04, 0xFF, 0x64, 0xFF, 0x64, 0xFF
+        64 FF
+   0268 64 FF 64 FF 04 FF   253 	.db	0x64, 0xFF, 0x64, 0xFF, 0x04, 0xFF, 0x04, 0xFF
+        04 FF
+   0270 64 FF 64 FF 64 FF   254 	.db	0x64, 0xFF, 0x64, 0xFF, 0x64, 0xFF, 0x64, 0xFF
+        64 FF
+   0278 64 FF 64            255 	.db	0x64, 0xFF, 0x64
+   027B FB FF               256 	.db	-5,0xFF
+   027D 1B                  257 	.db	27
+   027E 08 FF 08 FF C9 FF   258 	.db	0x08, 0xFF, 0x08, 0xFF, 0xC9, 0xFF, 0xC9, 0xFF
+        C9 FF
+   0286 F9 FF F9 FF F8 FF   259 	.db	0xF9, 0xFF, 0xF9, 0xFF, 0xF8, 0xFF, 0xF8, 0xFF
+        F8 FF
+   028E F9 FF F9 FF C9 FF   260 	.db	0xF9, 0xFF, 0xF9, 0xFF, 0xC9, 0xFF, 0xC9, 0xFF
+        C9 FF
+   0296 08 FF 08            261 	.db	0x08, 0xFF, 0x08
+   0299 FB FF               262 	.db	-5,0xFF
+   029B 1B                  263 	.db	27
+   029C 10 FF 10 FF F3 FF   264 	.db	0x10, 0xFF, 0x10, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF
+        F3 FF
+   02A4 F3 FF F3 FF 10 FF   265 	.db	0xF3, 0xFF, 0xF3, 0xFF, 0x10, 0xFF, 0x10, 0xFF
+        10 FF
+   02AC F3 FF F3 FF F3 FF   266 	.db	0xF3, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF
+        F3 FF
+   02B4 13 FF 13            267 	.db	0x13, 0xFF, 0x13
+   02B7 FB FF               268 	.db	-5,0xFF
+   02B9 1B                  269 	.db	27
+   02BA 27 FF 27 FF E7 FF   270 	.db	0x27, 0xFF, 0x27, 0xFF, 0xE7, 0xFF, 0xE7, 0xFF
+        E7 FF
+   02C2 E7 FF E7 FF 27 FF   271 	.db	0xE7, 0xFF, 0xE7, 0xFF, 0x27, 0xFF, 0x27, 0xFF
+        27 FF
+   02CA E7 FF E7 FF E7 FF   272 	.db	0xE7, 0xFF, 0xE7, 0xFF, 0xE7, 0xFF, 0xE7, 0xFF
+        E7 FF
+   02D2 E0 FF E0            273 	.db	0xE0, 0xFF, 0xE0
+   02D5 FB FF               274 	.db	-5,0xFF
+   02D7 1B                  275 	.db	27
+   02D8 C0 FF C0 FF F3 FF   276 	.db	0xC0, 0xFF, 0xC0, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF
+        F3 FF
+   02E0 F3 FF F3 FF F3 FF   277 	.db	0xF3, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF
+        F3 FF
+   02E8 F3 FF F3 FF F3 FF   278 	.db	0xF3, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF, 0xF3, 0xFF
+        F3 FF
+   02F0 40 FF 40            279 	.db	0x40, 0xFF, 0x40
+   02F3 FB FF               280 	.db	-5,0xFF
+   02F5 1B                  281 	.db	27
+   02F6 81 FF 81 FF 99 FF   282 	.db	0x81, 0xFF, 0x81, 0xFF, 0x99, 0xFF, 0x99, 0xFF
+        99 FF
+   02FE 9F FF 9F FF 91 FF   283 	.db	0x9F, 0xFF, 0x9F, 0xFF, 0x91, 0xFF, 0x91, 0xFF
+        91 FF
+   0306 99 FF 99 FF 99 FF   284 	.db	0x99, 0xFF, 0x99, 0xFF, 0x99, 0xFF, 0x99, 0xFF
+        99 FF
+   030E 81 FF 81            285 	.db	0x81, 0xFF, 0x81
+   0311 FB FF               286 	.db	-5,0xFF
+   0313 1B                  287 	.db	27
+   0314 99 FF 99 FF 99 FF   288 	.db	0x99, 0xFF, 0x99, 0xFF, 0x99, 0xFF, 0x99, 0xFF
+        99 FF
+   031C 99 FF 99 FF 81 FF   289 	.db	0x99, 0xFF, 0x99, 0xFF, 0x81, 0xFF, 0x81, 0xFF
+        81 FF
+   0324 99 FF 99 FF 99 FF   290 	.db	0x99, 0xFF, 0x99, 0xFF, 0x99, 0xFF, 0x99, 0xFF
+        99 FF
+   032C 99 FF 99            291 	.db	0x99, 0xFF, 0x99
+   032F FB FF               292 	.db	-5,0xFF
+   0331 1D                  293 	.db	29
+   0332 03 FF 03 FF CF FF   294 	.db	0x03, 0xFF, 0x03, 0xFF, 0xCF, 0xFF, 0xCF, 0xFF
+        CF FF
+   033A CF FF CF FF CF FF   295 	.db	0xCF, 0xFF, 0xCF, 0xFF, 0xCF, 0xFF, 0xCF, 0xFF
+        CF FF
+   0342 CF FF CF FF CF FF   296 	.db	0xCF, 0xFF, 0xCF, 0xFF, 0xCF, 0xFF, 0xCF, 0xFF
+        CF FF
+   034A CF FF CF FF FF      297 	.db	0xCF, 0xFF, 0xCF, 0xFF, 0xFF
+   034F 00                  298 	.db	0
+                            299 ;--------------------------------------------------------
+                            300 ; Home
+                            301 ;--------------------------------------------------------
+                            302 	.area _HOME
+                            303 	.area _CODE
+                            304 ;--------------------------------------------------------
+                            305 ; code
+                            306 ;--------------------------------------------------------
+                            307 	.area _CODE
+                            308 ;	spaceflight.c 42
+                            309 ;	genLabel
+                            310 ;	genFunction
+                            311 ;	---------------------------------
+                            312 ; Function main
+                            313 ; ---------------------------------
+   0000                     314 ___main_start:
+   0000                     315 _main:
+   0000 E8 FD               316 	lda	sp,-3(sp)
+                            317 ;	spaceflight.c 44
+                            318 ;	genAssign
+   0002 01 40 FF            319 	ld	bc,#0xFF40
+                            320 ;	genAssign
+                            321 ;	AOP_STK for _main_sloc0_1_0
+   0005 F8 01               322 	lda	hl,1(sp)
+   0007 36 40               323 	ld	(hl),#0x40
+   0009 23                  324 	inc	hl
+   000A 36 FF               325 	ld	(hl),#0xFF
+                            326 ;	genPointerGet
+                            327 ;	AOP_STK for _main_sloc0_1_0
+                            328 ;	AOP_STK for _main_sloc1_1_0
+   000C 2B                  329 	dec	hl
+   000D 5E                  330 	ld	e,(hl)
+   000E 23                  331 	inc	hl
+   000F 56                  332 	ld	d,(hl)
+   0010 1A                  333 	ld	a,(de)
+   0011 2B                  334 	dec	hl
+   0012 2B                  335 	dec	hl
+                            336 ;	genOr
+                            337 ;	AOP_STK for _main_sloc1_1_0
+   0013 77                  338 	ld      (hl),a
+   0014 7F                  339 	ld      a,a
+   0015 F6 80               340 	or	a,#0x80
+                            341 ;	genAssign (pointer)
+   0017 02                  342 	ld	(bc),a
+                            343 ;	spaceflight.c 46
+                            344 ;	genCall
+                            345 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0018 CD 27 00            346 	call	_displayTitle
+                            347 ;	spaceflight.c 48
+                            348 ;	genCall
+                            349 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   001B CD 98 01            350 	call	_setupBackground
+                            351 ;	spaceflight.c 50
+                            352 ;	genCall
+                            353 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   001E CD D1 01            354 	call	_setupSprites
+                            355 ;	spaceflight.c 52
+                            356 ;	genCall
+                            357 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0021 CD 37 02            358 	call	_controlShip
+                            359 ;	genLabel
+   0024                     360 00101$:
+                            361 ;	genEndFunction
+   0024 E8 03               362 	lda	sp,3(sp)
+   0026 C9                  363 	ret
+   0027                     364 ___main_end:
+                            365 ;	spaceflight.c 55
+                            366 ;	genLabel
+                            367 ;	genFunction
+                            368 ;	---------------------------------
+                            369 ; Function displayTitle
+                            370 ; ---------------------------------
+   0027                     371 ___displayTitle_start:
+   0027                     372 _displayTitle:
+   0027 E8 FD               373 	lda	sp,-3(sp)
+                            374 ;	spaceflight.c 56
+                            375 ;	genAssign
+   0029 01 40 FF            376 	ld	bc,#0xFF40
+                            377 ;	genAssign
+                            378 ;	AOP_STK for _displayTitle_sloc0_1_0
+   002C F8 01               379 	lda	hl,1(sp)
+   002E 36 40               380 	ld	(hl),#0x40
+   0030 23                  381 	inc	hl
+   0031 36 FF               382 	ld	(hl),#0xFF
+                            383 ;	genPointerGet
+                            384 ;	AOP_STK for _displayTitle_sloc0_1_0
+                            385 ;	AOP_STK for _displayTitle_sloc1_1_0
+   0033 2B                  386 	dec	hl
+   0034 5E                  387 	ld	e,(hl)
+   0035 23                  388 	inc	hl
+   0036 56                  389 	ld	d,(hl)
+   0037 1A                  390 	ld	a,(de)
+   0038 2B                  391 	dec	hl
+   0039 2B                  392 	dec	hl
+                            393 ;	genOr
+                            394 ;	AOP_STK for _displayTitle_sloc1_1_0
+   003A 77                  395 	ld      (hl),a
+                            396 ; Removed redundent load
+   003B F6 04               397 	or	a,#0x04
+                            398 ;	genAssign (pointer)
+   003D 02                  399 	ld	(bc),a
+                            400 ;	spaceflight.c 59
+                            401 ;	genIpush
+                            402 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   003E 21 E0 03            403 	ld	hl,#_titletext
+   0041 E5                  404 	push	hl
+                            405 ;	genIpush
+   0042 21 00 14            406 	ld	hl,#0x1400
+   0045 E5                  407 	push	hl
+                            408 ;	genCall
+   0046 CD 00 00            409 	call	_set_sprite_data
+   0049 E8 04               410 	lda	sp,4(sp)
+                            411 ;	spaceflight.c 62
+                            412 ;	genAssign
+                            413 ;	AOP_HL for _i
+   004B 21 22 05            414 	ld	hl,#_i
+   004E 36 00               415 	ld	(hl),#0x00
+                            416 ;	genLabel
+   0050                     417 00101$:
+                            418 ;	genCmpEq
+                            419 ;	AOP_HL for _i
+                            420 ; genCmpEq: left 1, right 1, result 0
+   0050 21 22 05            421 	ld	hl,#_i
+   0053 7E                  422 	ld	a,(hl)
+   0054 FE 0A               423 	cp	a,#0x0A
+   0056 CA AA 00            424 	jp	z,00104$
+   0059                     425 00127$:
+                            426 ;	spaceflight.c 63
+                            427 ;	genCast
+                            428 ;	AOP_HL for _i
+   0059 21 22 05            429 	ld	hl,#_i
+   005C 4E                  430 	ld	c,(hl)
+   005D 06 00               431 	ld	b,#0x00
+                            432 ;	genLeftShift
+                            433 ;	AOP_STK for _displayTitle_sloc0_1_0
+   005F F8 01               434 	lda	hl,1(sp)
+   0061 71                  435 	ld	(hl),c
+   0062 23                  436 	inc	hl
+   0063 70                  437 	ld	(hl),b
+   0064 2B                  438 	dec	hl
+   0065 CB 26               439 	sla	(hl)
+   0067 23                  440 	inc	hl
+   0068 CB 16               441 	rl	(hl)
+                            442 ;	genCast
+                            443 ;	AOP_STK for _displayTitle_sloc0_1_0
+                            444 ;	AOP_STK for _displayTitle_sloc1_1_0
+   006A 2B                  445 	dec	hl
+   006B 7E                  446 	ld	a,(hl)
+   006C 2B                  447 	dec	hl
+   006D 77                  448 	ld	(hl),a
+                            449 ;	genIpush
+                            450 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 1 deSending: 0
+   006E C5                  451 	push	bc
+                            452 ;	AOP_STK for _displayTitle_sloc1_1_0
+   006F 7E                  453 	ld	a,(hl)
+   0070 F5                  454 	push	af
+   0071 33                  455 	inc	sp
+                            456 ;	genIpush
+                            457 ;	AOP_HL for _i
+   0072 21 22 05            458 	ld	hl,#_i
+   0075 7E                  459 	ld	a,(hl)
+   0076 F5                  460 	push	af
+   0077 33                  461 	inc	sp
+                            462 ;	genCall
+   0078 CD 00 00            463 	call	_set_sprite_tile
+   007B E8 02               464 	lda	sp,2(sp)
+   007D C1                  465 	pop	bc
+                            466 ;	spaceflight.c 64
+                            467 ;	genLeftShift
+   007E 3E 04               468 	ld	a,#0x03+1
+   0080 18 04               469 	jr	00131$
+   0082                     470 00130$:
+   0082 CB 21               471 	sla	c
+   0084 CB 10               472 	rl	b
+   0086                     473 00131$:
+   0086 3D                  474 	dec	a
+   0087 20 F9               475 	jr	nz,00130$
+                            476 ;	genPlus
+                            477 ;	genPlusIncr
+                            478 ;	Can't optimise plus by inc, falling back to the normal way
+   0089 79                  479 	ld	a,c
+   008A C6 2F               480 	add	a,#0x2F
+   008C 4F                  481 	ld	c,a
+   008D 78                  482 	ld	a,b
+   008E CE 00               483 	adc	a,#0x00
+   0090 47                  484 	ld	b,a
+                            485 ;	genCast
+                            486 ; Removed redundent load
+                            487 ;	genIpush
+                            488 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0091 3E A0               489 	ld	a,#0xA0
+   0093 F5                  490 	push	af
+   0094 33                  491 	inc	sp
+                            492 ;	genIpush
+   0095 79                  493 	ld	a,c
+   0096 F5                  494 	push	af
+   0097 33                  495 	inc	sp
+                            496 ;	genIpush
+                            497 ;	AOP_HL for _i
+   0098 21 22 05            498 	ld	hl,#_i
+   009B 7E                  499 	ld	a,(hl)
+   009C F5                  500 	push	af
+   009D 33                  501 	inc	sp
+                            502 ;	genCall
+   009E CD 00 00            503 	call	_move_sprite
+   00A1 E8 03               504 	lda	sp,3(sp)
+                            505 ;	spaceflight.c 62
+                            506 ;	genPlus
+                            507 ;	AOP_HL for _i
+                            508 ;	genPlusIncr
+   00A3 21 22 05            509 	ld	hl,#_i
+   00A6 34                  510 	inc	(hl)
+                            511 ;	genGoto
+   00A7 C3 50 00            512 	jp	00101$
+                            513 ;	genLabel
+   00AA                     514 00104$:
+                            515 ;	spaceflight.c 68
+                            516 ;	genIpush
+                            517 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00AA 21 D0 03            518 	ld	hl,#_blacktile
+   00AD E5                  519 	push	hl
+                            520 ;	genIpush
+   00AE 21 08 01            521 	ld	hl,#0x0108
+   00B1 E5                  522 	push	hl
+                            523 ;	genCall
+   00B2 CD 00 00            524 	call	_set_bkg_data
+   00B5 E8 04               525 	lda	sp,4(sp)
+                            526 ;	spaceflight.c 69
+                            527 ;	genIpush
+                            528 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   00B7 21 68 01            529 	ld	hl,#_deepspace
+   00BA E5                  530 	push	hl
+                            531 ;	genIpush
+   00BB 21 14 16            532 	ld	hl,#0x1614
+   00BE E5                  533 	push	hl
+                            534 ;	genIpush
+   00BF 21 00 00            535 	ld	hl,#0x0000
+   00C2 E5                  536 	push	hl
+                            537 ;	genCall
+   00C3 CD 00 00            538 	call	_set_bkg_tiles
+   00C6 E8 06               539 	lda	sp,6(sp)
+                            540 ;	spaceflight.c 71
+                            541 ;	genAssign
+   00C8 01 40 FF            542 	ld	bc,#0xFF40
+                            543 ;	genAssign
+                            544 ;	AOP_STK for _displayTitle_sloc0_1_0
+   00CB F8 01               545 	lda	hl,1(sp)
+   00CD 36 40               546 	ld	(hl),#0x40
+   00CF 23                  547 	inc	hl
+   00D0 36 FF               548 	ld	(hl),#0xFF
+                            549 ;	genPointerGet
+                            550 ;	AOP_STK for _displayTitle_sloc0_1_0
+                            551 ;	AOP_STK for _displayTitle_sloc1_1_0
+   00D2 2B                  552 	dec	hl
+   00D3 5E                  553 	ld	e,(hl)
+   00D4 23                  554 	inc	hl
+   00D5 56                  555 	ld	d,(hl)
+   00D6 1A                  556 	ld	a,(de)
+   00D7 2B                  557 	dec	hl
+   00D8 2B                  558 	dec	hl
+                            559 ;	genOr
+                            560 ;	AOP_STK for _displayTitle_sloc1_1_0
+   00D9 77                  561 	ld      (hl),a
+                            562 ; Removed redundent load
+   00DA F6 01               563 	or	a,#0x01
+                            564 ;	genAssign (pointer)
+   00DC 02                  565 	ld	(bc),a
+                            566 ;	spaceflight.c 72
+                            567 ;	genAssign
+   00DD 01 40 FF            568 	ld	bc,#0xFF40
+                            569 ;	genAssign
+                            570 ;	AOP_STK for _displayTitle_sloc0_1_0
+   00E0 23                  571 	inc	hl
+   00E1 36 40               572 	ld	(hl),#0x40
+   00E3 23                  573 	inc	hl
+   00E4 36 FF               574 	ld	(hl),#0xFF
+                            575 ;	genPointerGet
+                            576 ;	AOP_STK for _displayTitle_sloc0_1_0
+                            577 ;	AOP_STK for _displayTitle_sloc1_1_0
+   00E6 2B                  578 	dec	hl
+   00E7 5E                  579 	ld	e,(hl)
+   00E8 23                  580 	inc	hl
+   00E9 56                  581 	ld	d,(hl)
+   00EA 1A                  582 	ld	a,(de)
+   00EB 2B                  583 	dec	hl
+   00EC 2B                  584 	dec	hl
+                            585 ;	genOr
+                            586 ;	AOP_STK for _displayTitle_sloc1_1_0
+   00ED 77                  587 	ld      (hl),a
+                            588 ; Removed redundent load
+   00EE F6 02               589 	or	a,#0x02
+                            590 ;	genAssign (pointer)
+   00F0 02                  591 	ld	(bc),a
+                            592 ;	spaceflight.c 75
+                            593 ;	genAssign
+                            594 ;	AOP_HL for _i
+   00F1 21 22 05            595 	ld	hl,#_i
+   00F4 36 00               596 	ld	(hl),#0x00
+                            597 ;	genLabel
+   00F6                     598 00109$:
+                            599 ;	genCmpEq
+                            600 ;	AOP_HL for _i
+                            601 ; genCmpEq: left 1, right 1, result 0
+   00F6 21 22 05            602 	ld	hl,#_i
+   00F9 7E                  603 	ld	a,(hl)
+   00FA FE 64               604 	cp	a,#0x64
+   00FC CA 3F 01            605 	jp	z,00112$
+   00FF                     606 00132$:
+                            607 ;	spaceflight.c 76
+                            608 ;	genAssign
+                            609 ;	AOP_HL for _j
+   00FF 21 23 05            610 	ld	hl,#_j
+   0102 36 00               611 	ld	(hl),#0x00
+                            612 ;	genLabel
+   0104                     613 00105$:
+                            614 ;	genCmpEq
+                            615 ;	AOP_HL for _j
+                            616 ; genCmpEq: left 1, right 1, result 1
+   0104 21 23 05            617 	ld	hl,#_j
+   0107 7E                  618 	ld	a,(hl)
+   0108 FE 0A               619 	cp	a,#0x0A
+   010A C2 11 01            620 	jp	nz,00133$
+   010D 3E 01               621 	ld	a,#0x01
+   010F 18 01               622 	jr	00134$
+   0111                     623 00133$:
+   0111 AF                  624 	xor	a,a
+   0112                     625 00134$:
+                            626 ;	genIfx
+   0112 B7                  627 	or	a,a
+   0113 C2 2F 01            628 	jp	nz,00108$
+                            629 ;	spaceflight.c 77
+                            630 ;	genAssign
+                            631 ;	(operands are equal 3)
+                            632 ;	genIpush
+                            633 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0116 21 00 FF            634 	ld	hl,#0xFF00
+   0119 E5                  635 	push	hl
+                            636 ;	genIpush
+                            637 ;	AOP_HL for _j
+   011A 21 23 05            638 	ld	hl,#_j
+   011D 7E                  639 	ld	a,(hl)
+   011E F5                  640 	push	af
+   011F 33                  641 	inc	sp
+                            642 ;	genCall
+   0120 CD 00 00            643 	call	_scroll_sprite
+   0123 E8 03               644 	lda	sp,3(sp)
+                            645 ;	spaceflight.c 76
+                            646 ;	genPlus
+                            647 ;	AOP_HL for _j
+                            648 ;	genPlusIncr
+   0125 21 23 05            649 	ld	hl,#_j
+   0128 46                  650 	ld	b,(hl)
+   0129 04                  651 	inc	b
+                            652 ;	genAssign
+   012A 48                  653 	ld	c,b
+                            654 ;	genAssign
+                            655 ;	AOP_HL for _j
+   012B 71                  656 	ld	(hl),c
+                            657 ;	genGoto
+   012C C3 04 01            658 	jp	00105$
+                            659 ;	genLabel
+   012F                     660 00108$:
+                            661 ;	spaceflight.c 79
+                            662 ;	genIpush
+                            663 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   012F 21 14 00            664 	ld	hl,#0x0014
+   0132 E5                  665 	push	hl
+                            666 ;	genCall
+   0133 CD 00 00            667 	call	_delay
+   0136 E8 02               668 	lda	sp,2(sp)
+                            669 ;	spaceflight.c 75
+                            670 ;	genPlus
+                            671 ;	AOP_HL for _i
+                            672 ;	genPlusIncr
+   0138 21 22 05            673 	ld	hl,#_i
+   013B 34                  674 	inc	(hl)
+                            675 ;	genGoto
+   013C C3 F6 00            676 	jp	00109$
+                            677 ;	genLabel
+   013F                     678 00112$:
+                            679 ;	spaceflight.c 84
+                            680 ;	genIpush
+                            681 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   013F 21 D0 07            682 	ld	hl,#0x07D0
+   0142 E5                  683 	push	hl
+                            684 ;	genCall
+   0143 CD 00 00            685 	call	_delay
+   0146 E8 02               686 	lda	sp,2(sp)
+                            687 ;	spaceflight.c 87
+                            688 ;	genAssign
+   0148 01 40 FF            689 	ld	bc,#0xFF40
+                            690 ;	genAssign
+                            691 ;	AOP_STK for _displayTitle_sloc0_1_0
+   014B F8 01               692 	lda	hl,1(sp)
+   014D 36 40               693 	ld	(hl),#0x40
+   014F 23                  694 	inc	hl
+   0150 36 FF               695 	ld	(hl),#0xFF
+                            696 ;	genPointerGet
+                            697 ;	AOP_STK for _displayTitle_sloc0_1_0
+                            698 ;	AOP_STK for _displayTitle_sloc1_1_0
+   0152 2B                  699 	dec	hl
+   0153 5E                  700 	ld	e,(hl)
+   0154 23                  701 	inc	hl
+   0155 56                  702 	ld	d,(hl)
+   0156 1A                  703 	ld	a,(de)
+   0157 2B                  704 	dec	hl
+   0158 2B                  705 	dec	hl
+                            706 ;	genAnd
+                            707 ;	AOP_STK for _displayTitle_sloc1_1_0
+   0159 77                  708 	ld      (hl),a
+                            709 ; Removed redundent load
+   015A E6 FD               710 	and	a,#0xFD
+                            711 ;	genAssign (pointer)
+   015C 02                  712 	ld	(bc),a
+                            713 ;	spaceflight.c 88
+                            714 ;	genAssign
+   015D 01 40 FF            715 	ld	bc,#0xFF40
+                            716 ;	genAssign
+                            717 ;	AOP_STK for _displayTitle_sloc0_1_0
+   0160 23                  718 	inc	hl
+   0161 36 40               719 	ld	(hl),#0x40
+   0163 23                  720 	inc	hl
+   0164 36 FF               721 	ld	(hl),#0xFF
+                            722 ;	genPointerGet
+                            723 ;	AOP_STK for _displayTitle_sloc0_1_0
+                            724 ;	AOP_STK for _displayTitle_sloc1_1_0
+   0166 2B                  725 	dec	hl
+   0167 5E                  726 	ld	e,(hl)
+   0168 23                  727 	inc	hl
+   0169 56                  728 	ld	d,(hl)
+   016A 1A                  729 	ld	a,(de)
+   016B 2B                  730 	dec	hl
+   016C 2B                  731 	dec	hl
+                            732 ;	genAnd
+                            733 ;	AOP_STK for _displayTitle_sloc1_1_0
+   016D 77                  734 	ld      (hl),a
+                            735 ; Removed redundent load
+   016E E6 FE               736 	and	a,#0xFE
+                            737 ;	genAssign (pointer)
+   0170 02                  738 	ld	(bc),a
+                            739 ;	spaceflight.c 91
+                            740 ;	genAssign
+                            741 ;	AOP_HL for _i
+   0171 21 22 05            742 	ld	hl,#_i
+   0174 36 00               743 	ld	(hl),#0x00
+                            744 ;	genLabel
+   0176                     745 00113$:
+                            746 ;	genCmpEq
+                            747 ;	AOP_HL for _i
+                            748 ; genCmpEq: left 1, right 1, result 0
+   0176 21 22 05            749 	ld	hl,#_i
+   0179 7E                  750 	ld	a,(hl)
+   017A FE 0A               751 	cp	a,#0x0A
+   017C CA 95 01            752 	jp	z,00117$
+   017F                     753 00135$:
+                            754 ;	spaceflight.c 92
+                            755 ;	genIpush
+                            756 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   017F 21 00 00            757 	ld	hl,#0x0000
+   0182 E5                  758 	push	hl
+                            759 ;	genIpush
+                            760 ;	AOP_HL for _i
+   0183 21 22 05            761 	ld	hl,#_i
+   0186 7E                  762 	ld	a,(hl)
+   0187 F5                  763 	push	af
+   0188 33                  764 	inc	sp
+                            765 ;	genCall
+   0189 CD 00 00            766 	call	_move_sprite
+   018C E8 03               767 	lda	sp,3(sp)
+                            768 ;	spaceflight.c 91
+                            769 ;	genPlus
+                            770 ;	AOP_HL for _i
+                            771 ;	genPlusIncr
+   018E 21 22 05            772 	ld	hl,#_i
+   0191 34                  773 	inc	(hl)
+                            774 ;	genGoto
+   0192 C3 76 01            775 	jp	00113$
+                            776 ;	genLabel
+   0195                     777 00117$:
+                            778 ;	genEndFunction
+   0195 E8 03               779 	lda	sp,3(sp)
+   0197 C9                  780 	ret
+   0198                     781 ___displayTitle_end:
+                            782 ;	spaceflight.c 96
+                            783 ;	genLabel
+                            784 ;	genFunction
+                            785 ;	---------------------------------
+                            786 ; Function setupBackground
+                            787 ; ---------------------------------
+   0198                     788 ___setupBackground_start:
+   0198                     789 _setupBackground:
+   0198 E8 FD               790 	lda	sp,-3(sp)
+                            791 ;	spaceflight.c 98
+                            792 ;	genIpush
+                            793 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   019A 21 50 03            794 	ld	hl,#_spacetiles
+   019D E5                  795 	push	hl
+                            796 ;	genIpush
+   019E 21 00 08            797 	ld	hl,#0x0800
+   01A1 E5                  798 	push	hl
+                            799 ;	genCall
+   01A2 CD 00 00            800 	call	_set_bkg_data
+   01A5 E8 04               801 	lda	sp,4(sp)
+                            802 ;	spaceflight.c 101
+                            803 ;	genIpush
+                            804 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01A7 21 00 00            805 	ld	hl,#_spacemap
+   01AA E5                  806 	push	hl
+                            807 ;	genIpush
+   01AB 21 14 16            808 	ld	hl,#0x1614
+   01AE E5                  809 	push	hl
+                            810 ;	genIpush
+   01AF 21 00 00            811 	ld	hl,#0x0000
+   01B2 E5                  812 	push	hl
+                            813 ;	genCall
+   01B3 CD 00 00            814 	call	_set_bkg_tiles
+   01B6 E8 06               815 	lda	sp,6(sp)
+                            816 ;	spaceflight.c 103
+                            817 ;	genAssign
+   01B8 01 40 FF            818 	ld	bc,#0xFF40
+                            819 ;	genAssign
+                            820 ;	AOP_STK for _setupBackground_sloc0_1_0
+   01BB F8 01               821 	lda	hl,1(sp)
+   01BD 36 40               822 	ld	(hl),#0x40
+   01BF 23                  823 	inc	hl
+   01C0 36 FF               824 	ld	(hl),#0xFF
+                            825 ;	genPointerGet
+                            826 ;	AOP_STK for _setupBackground_sloc0_1_0
+                            827 ;	AOP_STK for _setupBackground_sloc1_1_0
+   01C2 2B                  828 	dec	hl
+   01C3 5E                  829 	ld	e,(hl)
+   01C4 23                  830 	inc	hl
+   01C5 56                  831 	ld	d,(hl)
+   01C6 1A                  832 	ld	a,(de)
+   01C7 2B                  833 	dec	hl
+   01C8 2B                  834 	dec	hl
+                            835 ;	genOr
+                            836 ;	AOP_STK for _setupBackground_sloc1_1_0
+   01C9 77                  837 	ld      (hl),a
+   01CA 7F                  838 	ld      a,a
+   01CB F6 01               839 	or	a,#0x01
+                            840 ;	genAssign (pointer)
+   01CD 02                  841 	ld	(bc),a
+                            842 ;	genLabel
+   01CE                     843 00101$:
+                            844 ;	genEndFunction
+   01CE E8 03               845 	lda	sp,3(sp)
+   01D0 C9                  846 	ret
+   01D1                     847 ___setupBackground_end:
+                            848 ;	spaceflight.c 106
+                            849 ;	genLabel
+                            850 ;	genFunction
+                            851 ;	---------------------------------
+                            852 ; Function setupSprites
+                            853 ; ---------------------------------
+   01D1                     854 ___setupSprites_start:
+   01D1                     855 _setupSprites:
+   01D1 E8 FD               856 	lda	sp,-3(sp)
+                            857 ;	spaceflight.c 107
+                            858 ;	genAssign
+                            859 ;	AOP_HL for _x
+   01D3 21 20 05            860 	ld	hl,#_x
+   01D6 36 4B               861 	ld	(hl),#0x4B
+                            862 ;	spaceflight.c 108
+                            863 ;	genAssign
+                            864 ;	AOP_HL for _y
+   01D8 21 21 05            865 	ld	hl,#_y
+   01DB 36 4B               866 	ld	(hl),#0x4B
+                            867 ;	spaceflight.c 110
+                            868 ;	genAssign
+   01DD 01 40 FF            869 	ld	bc,#0xFF40
+                            870 ;	genAssign
+                            871 ;	AOP_STK for _setupSprites_sloc0_1_0
+   01E0 F8 01               872 	lda	hl,1(sp)
+   01E2 36 40               873 	ld	(hl),#0x40
+   01E4 23                  874 	inc	hl
+   01E5 36 FF               875 	ld	(hl),#0xFF
+                            876 ;	genPointerGet
+                            877 ;	AOP_STK for _setupSprites_sloc0_1_0
+                            878 ;	AOP_STK for _setupSprites_sloc1_1_0
+   01E7 2B                  879 	dec	hl
+   01E8 5E                  880 	ld	e,(hl)
+   01E9 23                  881 	inc	hl
+   01EA 56                  882 	ld	d,(hl)
+   01EB 1A                  883 	ld	a,(de)
+   01EC 2B                  884 	dec	hl
+   01ED 2B                  885 	dec	hl
+                            886 ;	genAnd
+                            887 ;	AOP_STK for _setupSprites_sloc1_1_0
+   01EE 77                  888 	ld      (hl),a
+   01EF 7F                  889 	ld      a,a
+   01F0 E6 FB               890 	and	a,#0xFB
+                            891 ;	genAssign (pointer)
+   01F2 02                  892 	ld	(bc),a
+                            893 ;	spaceflight.c 113
+                            894 ;	genIpush
+                            895 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   01F3 21 D0 02            896 	ld	hl,#_spaceship
+   01F6 E5                  897 	push	hl
+                            898 ;	genIpush
+   01F7 21 00 08            899 	ld	hl,#0x0800
+   01FA E5                  900 	push	hl
+                            901 ;	genCall
+   01FB CD 00 00            902 	call	_set_sprite_data
+   01FE E8 04               903 	lda	sp,4(sp)
+                            904 ;	spaceflight.c 116
+                            905 ;	genIpush
+                            906 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0200 21 00 00            907 	ld	hl,#0x0000
+   0203 E5                  908 	push	hl
+                            909 ;	genCall
+   0204 CD 00 00            910 	call	_set_sprite_tile
+   0207 E8 02               911 	lda	sp,2(sp)
+                            912 ;	spaceflight.c 119
+                            913 ;	genIpush
+                            914 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                            915 ;	AOP_HL for _y
+   0209 21 21 05            916 	ld	hl,#_y
+   020C 7E                  917 	ld	a,(hl)
+   020D F5                  918 	push	af
+   020E 33                  919 	inc	sp
+                            920 ;	genIpush
+                            921 ;	AOP_HL for _x
+   020F 21 20 05            922 	ld	hl,#_x
+   0212 7E                  923 	ld	a,(hl)
+   0213 F5                  924 	push	af
+   0214 33                  925 	inc	sp
+                            926 ;	genIpush
+   0215 3E 00               927 	ld	a,#0x00
+   0217 F5                  928 	push	af
+   0218 33                  929 	inc	sp
+                            930 ;	genCall
+   0219 CD 00 00            931 	call	_move_sprite
+   021C E8 03               932 	lda	sp,3(sp)
+                            933 ;	spaceflight.c 121
+                            934 ;	genAssign
+   021E 01 40 FF            935 	ld	bc,#0xFF40
+                            936 ;	genAssign
+                            937 ;	AOP_STK for _setupSprites_sloc0_1_0
+   0221 F8 01               938 	lda	hl,1(sp)
+   0223 36 40               939 	ld	(hl),#0x40
+   0225 23                  940 	inc	hl
+   0226 36 FF               941 	ld	(hl),#0xFF
+                            942 ;	genPointerGet
+                            943 ;	AOP_STK for _setupSprites_sloc0_1_0
+                            944 ;	AOP_STK for _setupSprites_sloc1_1_0
+   0228 2B                  945 	dec	hl
+   0229 5E                  946 	ld	e,(hl)
+   022A 23                  947 	inc	hl
+   022B 56                  948 	ld	d,(hl)
+   022C 1A                  949 	ld	a,(de)
+   022D 2B                  950 	dec	hl
+   022E 2B                  951 	dec	hl
+                            952 ;	genOr
+                            953 ;	AOP_STK for _setupSprites_sloc1_1_0
+   022F 77                  954 	ld      (hl),a
+   0230 7F                  955 	ld      a,a
+   0231 F6 02               956 	or	a,#0x02
+                            957 ;	genAssign (pointer)
+   0233 02                  958 	ld	(bc),a
+                            959 ;	genLabel
+   0234                     960 00101$:
+                            961 ;	genEndFunction
+   0234 E8 03               962 	lda	sp,3(sp)
+   0236 C9                  963 	ret
+   0237                     964 ___setupSprites_end:
+                            965 ;	spaceflight.c 124
+                            966 ;	genLabel
+                            967 ;	genFunction
+                            968 ;	---------------------------------
+                            969 ; Function controlShip
+                            970 ; ---------------------------------
+   0237                     971 ___controlShip_start:
+   0237                     972 _controlShip:
+                            973 	
+                            974 ;	spaceflight.c 125
+                            975 ;	genLabel
+   0237                     976 00111$:
+                            977 ;	spaceflight.c 126
+                            978 ;	genCall
+                            979 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0237 CD 00 00            980 	call	_joypad
+   023A 4B                  981 	ld	c,e
+                            982 ;	genCmpEq
+                            983 ; genCmpEq: left 1, right 1, result 0
+   023B 79                  984 	ld	a,c
+   023C FE 01               985 	cp	a,#0x01
+   023E CA 9E 02            986 	jp	z,00104$
+   0241                     987 00124$:
+                            988 ;	genCmpEq
+                            989 ; genCmpEq: left 1, right 1, result 0
+   0241 79                  990 	ld	a,c
+   0242 FE 02               991 	cp	a,#0x02
+   0244 CA 8E 02            992 	jp	z,00103$
+   0247                     993 00125$:
+                            994 ;	genCmpEq
+                            995 ; genCmpEq: left 1, right 1, result 0
+   0247 79                  996 	ld	a,c
+   0248 FE 04               997 	cp	a,#0x04
+   024A CA 6E 02            998 	jp	z,00101$
+   024D                     999 00126$:
+                           1000 ;	genCmpEq
+                           1001 ; genCmpEq: left 1, right 1, result 0
+   024D 79                 1002 	ld	a,c
+   024E FE 05              1003 	cp	a,#0x05
+   0250 CA C2 02           1004 	jp	z,00106$
+   0253                    1005 00127$:
+                           1006 ;	genCmpEq
+                           1007 ; genCmpEq: left 1, right 1, result 0
+   0253 79                 1008 	ld	a,c
+   0254 FE 06              1009 	cp	a,#0x06
+   0256 CA AE 02           1010 	jp	z,00105$
+   0259                    1011 00128$:
+                           1012 ;	genCmpEq
+                           1013 ; genCmpEq: left 1, right 1, result 0
+   0259 79                 1014 	ld	a,c
+   025A FE 08              1015 	cp	a,#0x08
+   025C CA 7E 02           1016 	jp	z,00102$
+   025F                    1017 00129$:
+                           1018 ;	genCmpEq
+                           1019 ; genCmpEq: left 1, right 1, result 0
+   025F 79                 1020 	ld	a,c
+   0260 FE 09              1021 	cp	a,#0x09
+   0262 CA EA 02           1022 	jp	z,00108$
+   0265                    1023 00130$:
+                           1024 ;	genCmpEq
+                           1025 ; genCmpEq: left 1, right 1, result 0
+   0265 79                 1026 	ld	a,c
+   0266 FE 0A              1027 	cp	a,#0x0A
+   0268 CA D6 02           1028 	jp	z,00107$
+   026B                    1029 00131$:
+                           1030 ;	genGoto
+   026B C3 37 02           1031 	jp	00111$
+                           1032 ;	spaceflight.c 128
+                           1033 ;	genLabel
+   026E                    1034 00101$:
+                           1035 ;	genMinus
+                           1036 ;	AOP_HL for _y
+   026E 21 21 05           1037 	ld	hl,#_y
+   0271 35                 1038 	dec	(hl)
+                           1039 ;	spaceflight.c 129
+                           1040 ;	genIpush
+                           1041 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0272 3E 00              1042 	ld	a,#0x00
+   0274 F5                 1043 	push	af
+   0275 33                 1044 	inc	sp
+                           1045 ;	genCall
+   0276 CD FF 02           1046 	call	_moveShip
+   0279 E8 01              1047 	lda	sp,1(sp)
+                           1048 ;	spaceflight.c 130
+                           1049 ;	genGoto
+   027B C3 37 02           1050 	jp	00111$
+                           1051 ;	spaceflight.c 133
+                           1052 ;	genLabel
+   027E                    1053 00102$:
+                           1054 ;	genPlus
+                           1055 ;	AOP_HL for _y
+                           1056 ;	genPlusIncr
+   027E 21 21 05           1057 	ld	hl,#_y
+   0281 34                 1058 	inc	(hl)
+                           1059 ;	spaceflight.c 134
+                           1060 ;	genIpush
+                           1061 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0282 3E 02              1062 	ld	a,#0x02
+   0284 F5                 1063 	push	af
+   0285 33                 1064 	inc	sp
+                           1065 ;	genCall
+   0286 CD FF 02           1066 	call	_moveShip
+   0289 E8 01              1067 	lda	sp,1(sp)
+                           1068 ;	spaceflight.c 135
+                           1069 ;	genGoto
+   028B C3 37 02           1070 	jp	00111$
+                           1071 ;	spaceflight.c 138
+                           1072 ;	genLabel
+   028E                    1073 00103$:
+                           1074 ;	genMinus
+                           1075 ;	AOP_HL for _x
+   028E 21 20 05           1076 	ld	hl,#_x
+   0291 35                 1077 	dec	(hl)
+                           1078 ;	spaceflight.c 139
+                           1079 ;	genIpush
+                           1080 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0292 3E 03              1081 	ld	a,#0x03
+   0294 F5                 1082 	push	af
+   0295 33                 1083 	inc	sp
+                           1084 ;	genCall
+   0296 CD FF 02           1085 	call	_moveShip
+   0299 E8 01              1086 	lda	sp,1(sp)
+                           1087 ;	spaceflight.c 140
+                           1088 ;	genGoto
+   029B C3 37 02           1089 	jp	00111$
+                           1090 ;	spaceflight.c 143
+                           1091 ;	genLabel
+   029E                    1092 00104$:
+                           1093 ;	genPlus
+                           1094 ;	AOP_HL for _x
+                           1095 ;	genPlusIncr
+   029E 21 20 05           1096 	ld	hl,#_x
+   02A1 34                 1097 	inc	(hl)
+                           1098 ;	spaceflight.c 144
+                           1099 ;	genIpush
+                           1100 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02A2 3E 01              1101 	ld	a,#0x01
+   02A4 F5                 1102 	push	af
+   02A5 33                 1103 	inc	sp
+                           1104 ;	genCall
+   02A6 CD FF 02           1105 	call	_moveShip
+   02A9 E8 01              1106 	lda	sp,1(sp)
+                           1107 ;	spaceflight.c 145
+                           1108 ;	genGoto
+   02AB C3 37 02           1109 	jp	00111$
+                           1110 ;	spaceflight.c 148
+                           1111 ;	genLabel
+   02AE                    1112 00105$:
+                           1113 ;	genMinus
+                           1114 ;	AOP_HL for _x
+   02AE 21 20 05           1115 	ld	hl,#_x
+   02B1 35                 1116 	dec	(hl)
+                           1117 ;	genMinus
+                           1118 ;	AOP_HL for _y
+   02B2 21 21 05           1119 	ld	hl,#_y
+   02B5 35                 1120 	dec	(hl)
+                           1121 ;	spaceflight.c 149
+                           1122 ;	genIpush
+                           1123 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02B6 3E 04              1124 	ld	a,#0x04
+   02B8 F5                 1125 	push	af
+   02B9 33                 1126 	inc	sp
+                           1127 ;	genCall
+   02BA CD FF 02           1128 	call	_moveShip
+   02BD E8 01              1129 	lda	sp,1(sp)
+                           1130 ;	spaceflight.c 150
+                           1131 ;	genGoto
+   02BF C3 37 02           1132 	jp	00111$
+                           1133 ;	spaceflight.c 153
+                           1134 ;	genLabel
+   02C2                    1135 00106$:
+                           1136 ;	genPlus
+                           1137 ;	AOP_HL for _x
+                           1138 ;	genPlusIncr
+   02C2 21 20 05           1139 	ld	hl,#_x
+   02C5 34                 1140 	inc	(hl)
+                           1141 ;	genMinus
+                           1142 ;	AOP_HL for _y
+   02C6 21 21 05           1143 	ld	hl,#_y
+   02C9 35                 1144 	dec	(hl)
+                           1145 ;	spaceflight.c 154
+                           1146 ;	genIpush
+                           1147 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02CA 3E 05              1148 	ld	a,#0x05
+   02CC F5                 1149 	push	af
+   02CD 33                 1150 	inc	sp
+                           1151 ;	genCall
+   02CE CD FF 02           1152 	call	_moveShip
+   02D1 E8 01              1153 	lda	sp,1(sp)
+                           1154 ;	spaceflight.c 155
+                           1155 ;	genGoto
+   02D3 C3 37 02           1156 	jp	00111$
+                           1157 ;	spaceflight.c 158
+                           1158 ;	genLabel
+   02D6                    1159 00107$:
+                           1160 ;	genMinus
+                           1161 ;	AOP_HL for _x
+   02D6 21 20 05           1162 	ld	hl,#_x
+   02D9 35                 1163 	dec	(hl)
+                           1164 ;	genPlus
+                           1165 ;	AOP_HL for _y
+                           1166 ;	genPlusIncr
+   02DA 21 21 05           1167 	ld	hl,#_y
+   02DD 34                 1168 	inc	(hl)
+                           1169 ;	spaceflight.c 159
+                           1170 ;	genIpush
+                           1171 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02DE 3E 07              1172 	ld	a,#0x07
+   02E0 F5                 1173 	push	af
+   02E1 33                 1174 	inc	sp
+                           1175 ;	genCall
+   02E2 CD FF 02           1176 	call	_moveShip
+   02E5 E8 01              1177 	lda	sp,1(sp)
+                           1178 ;	spaceflight.c 160
+                           1179 ;	genGoto
+   02E7 C3 37 02           1180 	jp	00111$
+                           1181 ;	spaceflight.c 163
+                           1182 ;	genLabel
+   02EA                    1183 00108$:
+                           1184 ;	genPlus
+                           1185 ;	AOP_HL for _x
+                           1186 ;	genPlusIncr
+   02EA 21 20 05           1187 	ld	hl,#_x
+   02ED 34                 1188 	inc	(hl)
+                           1189 ;	genPlus
+                           1190 ;	AOP_HL for _y
+                           1191 ;	genPlusIncr
+   02EE 21 21 05           1192 	ld	hl,#_y
+   02F1 34                 1193 	inc	(hl)
+                           1194 ;	spaceflight.c 164
+                           1195 ;	genIpush
+                           1196 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   02F2 3E 06              1197 	ld	a,#0x06
+   02F4 F5                 1198 	push	af
+   02F5 33                 1199 	inc	sp
+                           1200 ;	genCall
+   02F6 CD FF 02           1201 	call	_moveShip
+   02F9 E8 01              1202 	lda	sp,1(sp)
+                           1203 ;	spaceflight.c 166
+                           1204 ;	genGoto
+   02FB C3 37 02           1205 	jp	00111$
+                           1206 ;	genLabel
+   02FE                    1207 00113$:
+                           1208 ;	genEndFunction
+                           1209 	
+   02FE C9                 1210 	ret
+   02FF                    1211 ___controlShip_end:
+                           1212 ;	spaceflight.c 170
+                           1213 ;	genLabel
+                           1214 ;	genFunction
+                           1215 ;	---------------------------------
+                           1216 ; Function moveShip
+                           1217 ; ---------------------------------
+   02FF                    1218 ___moveShip_start:
+   02FF                    1219 _moveShip:
+                           1220 	
+                           1221 ;	spaceflight.c 171
+                           1222 ;	genIpush
+                           1223 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           1224 ;	AOP_STK for 
+   02FF F8 02              1225 	lda	hl,2(sp)
+   0301 7E                 1226 	ld	a,(hl)
+   0302 F5                 1227 	push	af
+   0303 33                 1228 	inc	sp
+                           1229 ;	genIpush
+   0304 3E 00              1230 	ld	a,#0x00
+   0306 F5                 1231 	push	af
+   0307 33                 1232 	inc	sp
+                           1233 ;	genCall
+   0308 CD 00 00           1234 	call	_set_sprite_tile
+   030B E8 02              1235 	lda	sp,2(sp)
+                           1236 ;	spaceflight.c 172
+                           1237 ;	genIpush
+                           1238 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+                           1239 ;	AOP_HL for _y
+   030D 21 21 05           1240 	ld	hl,#_y
+   0310 7E                 1241 	ld	a,(hl)
+   0311 F5                 1242 	push	af
+   0312 33                 1243 	inc	sp
+                           1244 ;	genIpush
+                           1245 ;	AOP_HL for _x
+   0313 21 20 05           1246 	ld	hl,#_x
+   0316 7E                 1247 	ld	a,(hl)
+   0317 F5                 1248 	push	af
+   0318 33                 1249 	inc	sp
+                           1250 ;	genIpush
+   0319 3E 00              1251 	ld	a,#0x00
+   031B F5                 1252 	push	af
+   031C 33                 1253 	inc	sp
+                           1254 ;	genCall
+   031D CD 00 00           1255 	call	_move_sprite
+   0320 E8 03              1256 	lda	sp,3(sp)
+                           1257 ;	spaceflight.c 173
+                           1258 ;	genIpush
+                           1259 ; _saveRegsForCall: sendSetSize: 0 deInUse: 0 bcInUse: 0 deSending: 0
+   0322 21 1E 00           1260 	ld	hl,#0x001E
+   0325 E5                 1261 	push	hl
+                           1262 ;	genCall
+   0326 CD 00 00           1263 	call	_delay
+   0329 E8 02              1264 	lda	sp,2(sp)
+                           1265 ;	genLabel
+   032B                    1266 00101$:
+                           1267 ;	genEndFunction
+                           1268 	
+   032B C9                 1269 	ret
+   032C                    1270 ___moveShip_end:
+                           1271 	.area _CODE
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 1.
+
+Symbol Table
+
+  0 ___controlShip_end                 02FF R
+  0 ___controlShip_start               0237 R
+  0 ___displayTitle_end                0198 R
+  0 ___displayTitle_start              0027 R
+  0 ___main_end                        0027 R
+  0 ___main_start                      0000 R
+  0 ___moveShip_end                    032C R
+  0 ___moveShip_start                  02FF R
+  0 ___setupBackground_end             01D1 R
+  0 ___setupBackground_start           0198 R
+  0 ___setupSprites_end                0237 R
+  0 ___setupSprites_start              01D1 R
+    __initrleblock                     **** GX
+  1 _blacktile                         03D0 GR
+  0 _controlShip                       0237 GR
+  1 _deepspace                         0168 GR
+    _delay                             **** GX
+  0 _displayTitle                      0027 GR
+  1 _i                                 0522 GR
+  1 _j                                 0523 GR
+    _joypad                            **** GX
+  0 _main                              0000 GR
+  0 _moveShip                          02FF GR
+    _move_sprite                       **** GX
+    _scroll_sprite                     **** GX
+    _set_bkg_data                      **** GX
+    _set_bkg_tiles                     **** GX
+    _set_sprite_data                   **** GX
+    _set_sprite_tile                   **** GX
+  0 _setupBackground                   0198 GR
+  0 _setupSprites                      01D1 GR
+  1 _spacemap                          0000 GR
+  1 _spaceship                         02D0 GR
+  1 _spacetiles                        0350 GR
+  1 _titletext                         03E0 GR
+  1 _x                                 0520 GR
+  1 _y                                 0521 GR
+
+ASxxxx Assembler V01.75  (GameBoy Z80-like CPU), page 2.
+
+Area Table
+
+   0 _CODE                              size  32C   flags 0
+   1 _DATA                              size  524   flags 0
+   2 _OVERLAY                           size    0   flags 0
+   3 _ISEG                              size    0   flags 0
+   4 _BSEG                              size    0   flags 0
+   5 _XSEG                              size    0   flags 0
+   6 _GSINIT                            size  350   flags 0
+   7 _GSFINAL                           size    0   flags 0
+   8 _HOME                              size    0   flags 0
