@@ -1,3 +1,5 @@
+[![License: MIT](https://black.readthedocs.io/en/stable/_static/license.svg)](https://github.com/psf/black/blob/main/LICENSE)
+
 # Game Boy Programs
 Various Game Boy programs created with the GBDK
 
